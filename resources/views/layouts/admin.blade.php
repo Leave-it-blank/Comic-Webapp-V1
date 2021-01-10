@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Dashboard</title>
+
+ 
+  <!-- Custom styles for this template-->
+ 
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="#" crossorigin="anonymous">
+
+  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+  <script>
+  var user = {!!json_encode((array)auth()->user()->name) !!};
+</script>
+  
+
+</head>
+
+
+<body id="page-top">
+
+
+
+
+
+
+ @include('inc.admin_navbar_small_display')
+
+
+
+<div class="grid lg:grid-cols-6">
+    <div class="lg:col-span-1 lg:flex lg:justify-end">
+   @include('inc.admin_sidebar')
+    </div>
+  
+    <main class="px-16 py-6 lg:col-span-5  bg-gray-100">
+      <div class="container">
+     @include('inc.admin_navbar')
+
+
+      <div>
+     
+  
+        <div class="mt-8 grid lg:grid-cols-1 gap-10">
+          <!-- cards go here -->
+      
+
+     @yield('content')
+
+     </div>
+     </div>
+  <!-- load more button 
+      <div class="mt-12 flex justify-center">
+        <div class="btn bg-secondary-100 text-secondary-200 inline-block hover:shadow-inner transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300">Load more</div>
+      </div>    --> 
+    </main>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- scripts only -->
+<div> 
+<script src="{{ asset('js/admin.js') }}" defer></script> 
+
+
+<script>
+function readURL(input, id) {
+id = id || '#file-image';
+if (input.files &amp;&amp; input.files[0]) {
+var reader = new FileReader();
+reader.onload = function (e) {
+$(id).attr('src', e.target.result);
+};
+reader.readAsDataURL(input.files[0]);
+$('#file-image').removeClass('hidden');
+$('#start').hide();
+}
+}
+</script> 
+
+  
+    
+   </div>
+   
+</body>
+   
+           
+
+  
+</html>
