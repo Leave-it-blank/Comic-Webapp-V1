@@ -23,6 +23,11 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('Admin.settings');
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
+        return view('Admin.settings')->with([         
+            
+            'settings' => $settings,
+            'features' => $features   ]);
     }
 }

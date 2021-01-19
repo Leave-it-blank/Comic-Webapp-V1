@@ -23,6 +23,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('Admin.dashboard');
+
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
+        return view('Admin.dashboard')->with([         
+            
+            'settings' => $settings,
+            'features' => $features   ]);
     }
 }

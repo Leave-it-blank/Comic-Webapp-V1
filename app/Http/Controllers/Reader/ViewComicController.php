@@ -60,6 +60,7 @@ class ViewComicController extends Controller
     {
 
         $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
         
 
         if( $comics = Comic::find($id ))
@@ -78,8 +79,8 @@ class ViewComicController extends Controller
             'chapters' => $chapters,
 
             'comics' => $comics,
-            'settings' => $settings
-            
+            'settings' => $settings,
+            'features' => $features
            
             
         ]);

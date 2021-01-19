@@ -25,6 +25,8 @@ class HomepageController extends Controller
         $carousels = carousel::all();
         $comics = Comic::all();
         $chapters = Chapter::orderBy('id', 'desc')->limit(8)->get();
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
         
         
         return view('Home')->with([
@@ -35,7 +37,9 @@ class HomepageController extends Controller
             
             'chapters' => $chapters,
 
-         
+            'settings' => $settings,
+            'features' => $features
+           
            
             
         ]); 

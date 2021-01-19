@@ -23,6 +23,11 @@ class SeriesController extends Controller
      */
     public function index()
     {
-        return view('Admin.series');
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
+        return view('Admin.series')->with([         
+            
+            'settings' => $settings,
+            'features' => $features   ]);
     }
 }
