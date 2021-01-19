@@ -18,6 +18,7 @@ class CarouselController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:admin']);
     }
     /**
      * Display a listing of the resource.

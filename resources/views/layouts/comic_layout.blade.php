@@ -28,6 +28,8 @@
       
 
      </div>
+
+     @include('inc.disq')
     </div>
 
       <!-- jQuery first,scripts js -->

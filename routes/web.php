@@ -65,30 +65,65 @@ Route::namespace('Reader')  ->name('reader.') ->group(function(){
 
 Auth::routes();
 
+Route::group(['middleware' => ['permission:create series|admin']], function () {
 
-
-
-Route::get('series', 'SeriesController@index');
-
-
-Route::get('settings', 'SettingsController@index');
-
-
-Route::get('createseries', 'CreateseriesController@index');
-
-
-Route::get('dashboard', 'DashboardController@index') ->name('dashboard');
-
-Route::get('profile', 'UserProfileController@index');
-
-Route::namespace('Admin') ->prefix('admin') ->name('admin.') ->group(function(){
-
-
-Route::get('features', 'FeaturesController@index') ->name('features.');
-Route::resource('/features/carousel', 'CarouselController');
-Route::resource('/users', 'UsersController');
-Route::resource('/comics', 'ComicsController');
-
-Route::resource('/comics/{id}/chapter', 'ChapterController');
+    Route::get('createseries', 'CreateseriesController@index');
 
 });
+
+Route::group(['middleware' => ['permission:admin']], function () {
+
+    Route::get('settings', 'SettingsController@index');
+
+
+});
+
+Route::group(['middleware' => ['permission:admin']], function () {
+
+    Route::namespace('Admin') ->prefix('admin') ->name('admin.') ->group(function(){
+
+
+        Route::get('features', 'FeaturesController@index') ->name('features.');
+        Route::resource('/features/carousel', 'CarouselController');
+        Route::resource('/users', 'UsersController');
+     
+        });
+
+
+});
+
+
+
+
+Route::group(['middleware' => ['permission:edit series|admin|create series|delete series']], function () {
+
+    Route::namespace('Admin') ->prefix('admin') ->name('admin.') ->group(function(){
+
+
+        Route::resource('/comics', 'ComicsController');
+
+        Route::resource('/comics/{id}/chapter', 'ChapterController');
+     
+        });
+
+
+});
+
+
+
+Route::group(['middleware' => ['permission:admin|reader|create series|delete series|edit series']], function () {
+
+  
+    Route::get('series', 'SeriesController@index');
+
+
+
+    Route::get('dashboard', 'DashboardController@index') ->name('dashboard');
+    
+    Route::get('profile', 'UserProfileController@index');
+    
+
+});
+
+
+

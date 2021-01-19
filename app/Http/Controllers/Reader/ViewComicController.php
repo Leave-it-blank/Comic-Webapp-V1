@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use App\chapter;
+use App\settings;
 
 class ViewComicController extends Controller
 {
@@ -22,8 +23,10 @@ class ViewComicController extends Controller
     public function index( )
     {
         $comics = Comic::find($comics->id);
+
+        $settings =  DB::table('settings')->where('id', '1')->first();
         
-        return view('series.comic_info_test')->with('comics', $comics);
+        return view('series.comic_info_test')->with(['comics' => $comics, 'settings' => $settings]);
     }
 
     /**
@@ -56,6 +59,8 @@ class ViewComicController extends Controller
     public function show(comic $comic, $id, $slug)
     {
 
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        
 
         if( $comics = Comic::find($id ))
 
@@ -70,8 +75,10 @@ class ViewComicController extends Controller
             'id' => $id,
             'si' => $slug,
         
-            'chapters' => $chapters
+            'chapters' => $chapters,
 
+            'comics' => $comics,
+            'settings' => $settings
             
            
             

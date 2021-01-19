@@ -21,6 +21,7 @@ class ComicsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware(['permission:create series|edit series|delete series']);
     }
 
     public function index()

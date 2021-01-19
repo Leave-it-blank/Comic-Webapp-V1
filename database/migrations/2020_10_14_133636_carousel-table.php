@@ -24,8 +24,11 @@ class CarouselTable extends Migration
         });
         Schema::create('features', function (Blueprint $table) {
 			$table->bigIncrements('id')->unique();
-			$table->string('name', 200);
-			$table->string('status')->default(false);
+            $table->string('name', 200);
+            $table->string('sidebar');
+            $table->string('search', 255);
+            $table->boolean('search_status')->default(false);
+			$table->boolean('side_bar_status')->default(false);
             $table->string('url',255)->nullable();
             $table->string('meta',255)->nullable();
             $table->string('class',255)->nullable();

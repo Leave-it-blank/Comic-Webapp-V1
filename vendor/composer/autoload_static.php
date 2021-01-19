@@ -547,8 +547,8 @@ class ComposerStaticInit1587698109c6c1d55d768295171c45d1
         'App\\Http\\Controllers\\Reader\\LatestController' => __DIR__ . '/../..' . '/app/Http/Controllers/Reader/LatestController.php',
         'App\\Http\\Controllers\\Reader\\ViewComicController' => __DIR__ . '/../..' . '/app/Http/Controllers/Reader/ViewComicController.php',
         'App\\Http\\Controllers\\Reader\\ViewpagesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Reader/ViewpagesController.php',
-        'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
         'App\\Http\\Controllers\\SeriesController' => __DIR__ . '/../..' . '/app/Http/Controllers/SeriesController.php',
+        'App\\Http\\Controllers\\SettingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/SettingsController.php',
         'App\\Http\\Controllers\\UserProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserProfileController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -572,7 +572,7 @@ class ComposerStaticInit1587698109c6c1d55d768295171c45d1
         'App\\category' => __DIR__ . '/../..' . '/app/category.php',
         'App\\chapter' => __DIR__ . '/../..' . '/app/chapter.php',
         'App\\comic' => __DIR__ . '/../..' . '/app/comic.php',
-        'App\\download' => __DIR__ . '/../..' . '/app/download.php',
+        'App\\feature' => __DIR__ . '/../..' . '/app/feature.php',
         'App\\language' => __DIR__ . '/../..' . '/app/language.php',
         'App\\page' => __DIR__ . '/../..' . '/app/page.php',
         'App\\page_view' => __DIR__ . '/../..' . '/app/page_view.php',
@@ -5124,6 +5124,7 @@ class ComposerStaticInit1587698109c6c1d55d768295171c45d1
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
         'phpDocumentor\\Reflection\\Utils' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/Utils.php',
+        'settings_seeder' => __DIR__ . '/../..' . '/database/seeds/settings_seeder.php',
         'voku\\helper\\ASCII' => __DIR__ . '/..' . '/voku/portable-ascii/src/voku/helper/ASCII.php',
     );
 

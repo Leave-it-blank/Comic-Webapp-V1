@@ -28,23 +28,25 @@
             </a>
           </li>
          
-        
+        @can('admin')
           <li class="text-gray-700 py-1">
             <a href="/admin/users" class="block  m-2 px-4 flex    hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-end   hover:text-yellow-500">
               <span>Users</span>
             
             </a>
-          </li>
+          </li> @endcan @can('create series')
+    
           <li class="text-gray-700 py-1">
             <a href="/createseries" class="block  m-2 px-4 flex justify-end   hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
               <span>Create Comics</span>
              </a>
-          </li>
+          </li> @endcan @can('edit series')
           <li class="py-1 text-gray-700 ">
             <a href="/admin/comics" class="block  m-2 px-4    hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-end   hover:text-yellow-500">
               <span>Comics</span>
              </a>
-          </li>
+          </li>  @endcan
+          @can('admin')
           <li class="py-1 text-gray-700 ">
             <a href="/admin/features" class="block  m-2 px-4 flex justify-end     hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Features</span>
@@ -54,7 +56,7 @@
             <a href="/settings" class="hidden px-4   m-2 flex justify-end    hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Settings</span>
                </a>
-          </li>
+          </li> @endcan
         </ul>
 
 </div>
@@ -89,7 +91,7 @@
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
 </svg></a>
           </li>
-         
+         @can('admin')
           
           <li class="text-gray-700 py-1">
             <a href="/admin/users" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent   hover:text-yellow-500">
@@ -98,21 +100,24 @@
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
 </svg>
             </a>
-          </li>
+          </li> @endcan
+          @can('create series')
           <li class="text-gray-700 py-1">
             <a href="/createseries" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
               <span>Create</span>
               <svg class="w-5 ml-2"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg> </a>
-          </li>
+          </li> @endcan
+          @can('edit series')
           <li class="py-1 text-gray-700 ">
             <a href="/admin/comics" class="block  m-4 px-4   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-start hover:text-yellow-500">
               <span>Comics</span>
               <svg class="w-5 ml-2"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
                 </svg></a>
-          </li>
+          </li> @endcan
+          @can('admin')
           <li class="py-1 text-gray-700 ">
             <a href="/admin/features" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Features</span>
@@ -126,6 +131,6 @@
               <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg> </a>
-          </li>
+          </li> @endcan
         </ul>
       </nav>
