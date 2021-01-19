@@ -4525,6 +4525,7 @@ return array(
     'eloquentFilter\\QueryFilter\\Queries\\WhereOr' => $vendorDir . '/mehdi-fathi/eloquent-filter/src/QueryFilter/Queries/WhereOr.php',
     'eloquentFilter\\QueryFilter\\QueryFilter' => $vendorDir . '/mehdi-fathi/eloquent-filter/src/QueryFilter/QueryFilter.php',
     'eloquentFilter\\ServiceProvider' => $vendorDir . '/mehdi-fathi/eloquent-filter/src/ServiceProvider.php',
+    'features_seeder' => $baseDir . '/database/seeds/features_seeder.php',
     'phpDocumentor\\Reflection\\DocBlock' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
     'phpDocumentor\\Reflection\\DocBlockFactory' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
     'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => $vendorDir . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',

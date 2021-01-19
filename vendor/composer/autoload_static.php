@@ -5044,6 +5044,7 @@ class ComposerStaticInit1587698109c6c1d55d768295171c45d1
         'eloquentFilter\\QueryFilter\\Queries\\WhereOr' => __DIR__ . '/..' . '/mehdi-fathi/eloquent-filter/src/QueryFilter/Queries/WhereOr.php',
         'eloquentFilter\\QueryFilter\\QueryFilter' => __DIR__ . '/..' . '/mehdi-fathi/eloquent-filter/src/QueryFilter/QueryFilter.php',
         'eloquentFilter\\ServiceProvider' => __DIR__ . '/..' . '/mehdi-fathi/eloquent-filter/src/ServiceProvider.php',
+        'features_seeder' => __DIR__ . '/../..' . '/database/seeds/features_seeder.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',
