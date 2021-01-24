@@ -11,7 +11,7 @@ class chapter extends Model
 {
 	use Sluggable;
 
-	protected $primaryKey = 'comic_id';
+	protected $primaryKey = 'id';
 	use Filterable;
 
     /**
@@ -51,9 +51,7 @@ class chapter extends Model
 
 	public function comic()
 	{
-
-		
-		return $this->belongsTo( \App\comic::class , 'comic_id');
+       return $this->belongsTo( \App\comic::class , 'comic_id');
 	}
 
 	public function deletechapter()

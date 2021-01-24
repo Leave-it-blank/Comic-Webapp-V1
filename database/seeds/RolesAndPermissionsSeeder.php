@@ -24,6 +24,7 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'delete series']);
         Permission::create(['name' => 'admin']);
         Permission::create(['name' => 'edit series']);
+        Permission::create(['name' => 'reader']);
 
         // create roles and assign created permissions
         $role = Role::create(['name' => 'Admin'])
@@ -32,6 +33,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // this can be done as separate statements
         $role = Role::create(['name' => 'ContentManager'])
             ->givePermissionTo(['create series', 'edit series']);
-        $role = Role::create(['name' => 'Reader']);
+        $role = Role::create(['name' => 'Reader'])
+        ->givePermissionTo(['reader']);
     }
 }

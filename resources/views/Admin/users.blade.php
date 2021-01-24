@@ -42,7 +42,7 @@
                 
                 <div class="text-sm  m-4 leading-5 "> {{ $user->id }}</div>
                   <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full" src="{{ $user->cover }}" alt="">
+                    <img class="h-10 w-10 rounded-full" src="{{ $user->profile_pic }}" alt="">
                   </div>
               
                   <div class="ml-4">

@@ -56,7 +56,7 @@
     
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="image">
-      Choose Thumbnail:
+      Upload Pages:
       </label>
       <input class="block appearance-none w-full bg-gray-200 border "  required type="file" class="form-control" name="image[]" placeholder="address" multiple>
       <p class="text-gray-500 text-xs italic">Make sure to use 001 002 003 naming</p>

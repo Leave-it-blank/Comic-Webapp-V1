@@ -24,6 +24,7 @@ class ViewComicController extends Controller
     public function index( )
     {
         $comics = Comic::find($comics->id);
+        
 
         $settings =  DB::table('settings')->where('id', '1')->first();
         
@@ -67,7 +68,7 @@ class ViewComicController extends Controller
         if( $comics = Comic::find($id ))
 
        {
-       
+        $comics->increment('view_count');
          
         $chapters =  Chapter::where( 'comic_id', $id)->get();
       

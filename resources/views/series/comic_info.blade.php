@@ -16,7 +16,7 @@
 			<img src="{{ $comics->cover }}" class="m-4 shadow-xl rounded-sm md:hidden" style=" height: auto;    width: auto;">
 			<img src="{{ $comics->cover }}" class="m-4 shadow-xl rounded-sm hidden md:block " style=" height: auto;    width: 350px;">
 
-		<div class="container pt-8 shadow-lg hover:border-yellow-500  p-3 transition ease-in duration-300 md:p-4 m-4 py-3"> <div class="m-2"> Author: {{ $comics->author }} </div> <div class="m-2"> Artist: {{ $comics->artist }} </div> <div class="m-2"> Last Updated: {{ $comics->updated_at }} </div> <div class="m-2"> Views: {{ '10000' }} </div> </div>
+		<div class="container pt-8 shadow-lg hover:border-yellow-500  p-3 transition ease-in duration-300 md:p-4 text-sm m-4 py-3"> <div class="m-2 "> Author: {{ $comics->author }} </div> <div class="m-2"> Artist: {{ $comics->artist }} </div> <div class="m-2"> Last Updated: {{ $comics->updated_at }} </div> <div class="m-2"> Views: {{ $comics->view_count }} </div> </div>
 		</div>
 
 		

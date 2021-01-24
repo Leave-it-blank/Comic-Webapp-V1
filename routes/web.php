@@ -103,6 +103,8 @@ Route::group(['middleware' => ['permission:edit series|admin|create series|delet
         Route::resource('/comics', 'ComicsController');
 
         Route::resource('/comics/{id}/chapter', 'ChapterController');
+
+        
      
         });
 

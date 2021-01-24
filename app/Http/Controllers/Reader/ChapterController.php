@@ -60,17 +60,16 @@ class ChapterController extends Controller
 
         if( $comics = Comic::find($id ))
 
-        {
-
-          
-
-
-      
-    
+      {
             $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
-   
-         
 
+            $chapter_view = DB::table('chapters')->where( 'comic_id', $id)->where( 'number', $number);
+
+            $chapter_view->increment('view_count');
+           
+            $comics->increment('view_count');
+           
+            
           
           
         

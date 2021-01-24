@@ -151,9 +151,21 @@ class ChapterController extends Controller
      * @param  \App\chapter  $chapter
      * @return \Illuminate\Http\Response
      */
-    public function edit(chapter $chapter)
+    public function edit($id, $number)
     {
-        //
+
+          $comics = comic::find($id);
+          $chapter = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+
+          return view('Admin.comic.chapter.edit')->with([
+ 
+            'comics' => $comics,
+            'id' => $id,
+            'cid' => $chapter->id,
+            'number' => $chapter->number,
+            'chapter' => $chapter
+            
+        ]);
     }
 
     /**
@@ -163,14 +175,78 @@ class ChapterController extends Controller
      * @param  \App\chapter  $chapter
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, chapter $chapter)
+    public function update(Request $request, $id, $number)
     {
-        //
+
+      $chapter_update_id = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+       $request->validate([
+        'name'=>'required',
+        'number'=>'required',
+        'volume'=>'required',
+           ]);
+          $cid = $chapter_update_id->id;
+
+         if( $chapter_update = chapter::find($cid))
+         {
+
+          $chapter_update->name =  $request->get('name');
+          $chapter_update->number = $request->get('number');
+          $chapter_update->volume = $request->get('volume');
+
+          if($request->hasFile('image'))
+          {
+           $names = [];
+               foreach($request->file('image') as $image)
+          {
+                $destinationPath = 'storage/comics/'. $id. '/'. $request->get('volume'). '/' .$request->get('number');
+                $filename = $image->getClientOriginalName();
+                $image->move($destinationPath, $filename);
+                array_push($names, $filename);          
+  
+           }
+
+           $chapter_update->cover =  json_encode($names);
+           $chapter_update->url =    $destinationPath. '/';
+
+         }
+
+        
+      
+        }
+
+        if(  $chapter_update->save())
+        {
+
+          $comics = comic::find($id);
+          $chapters =  Chapter::where( 'comic_id', $id)->get();
+          $request->session()->flash('success', 'Chapter '.$cid.' has been updated.');
+          return view('Admin.comic.chapter.index')->with([
+ 
+            'comics' => $comics,
+          
+           'id' => $id,
+        
+           'chapters' => $chapters,
+
+            
+           
+            
+        ]);
+      }
+      else
+      {
+          $request->session()->flash('erorr', $cid .'has been not updated due to technical error.');
+          return redirect()->back();
+      }
     }
 
     /**
      * Remove the specified resource from storage.
      *
+     * 
+     * 
+     *    
+     *  
      * @param  \App\chapter  $chapter
      * @return \Illuminate\Http\Response
      */
