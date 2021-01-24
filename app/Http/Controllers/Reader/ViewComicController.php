@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\View;
 use App\chapter;
 use App\settings;
 
+
 class ViewComicController extends Controller
 {
     /**
@@ -66,7 +67,10 @@ class ViewComicController extends Controller
         if( $comics = Comic::find($id ))
 
        {
+       
+         
         $chapters =  Chapter::where( 'comic_id', $id)->get();
+      
         
         return View::make('series.comic_info')->with([
  
@@ -84,6 +88,7 @@ class ViewComicController extends Controller
            
             
         ]);
+     
         }
       
    
@@ -97,6 +102,7 @@ class ViewComicController extends Controller
          
    
            }
+          
           
     }
 

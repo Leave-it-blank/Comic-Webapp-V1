@@ -25,9 +25,9 @@
   
 
 </head>
+<?php   $settings =  DB::table('settings')->where('id', '1')->first(); ?>
 
-
-<body id="page-top">
+<body id="page-top"  style="background-color: {{$settings->admin_theme_name}}; color: {{$settings->admin_text_meta}};">
 
 
 
@@ -43,7 +43,7 @@
    @include('inc.admin_sidebar')
     </div>
   
-    <main class="px-16 py-6 lg:col-span-5  bg-gray-100">
+    <main class="px-16 py-6 lg:col-span-5 ">
       <div class="container">
      @include('inc.admin_navbar')
 
@@ -103,20 +103,7 @@
 <script src="{{ asset('js/admin.js') }}" defer></script> 
 
 
-<script>
-function readURL(input, id) {
-id = id || '#file-image';
-if (input.files &amp;&amp; input.files[0]) {
-var reader = new FileReader();
-reader.onload = function (e) {
-$(id).attr('src', e.target.result);
-};
-reader.readAsDataURL(input.files[0]);
-$('#file-image').removeClass('hidden');
-$('#start').hide();
-}
-}
-</script> 
+
 
   
     

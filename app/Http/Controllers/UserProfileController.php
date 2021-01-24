@@ -30,18 +30,13 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        $features =  DB::table('features')->where('id', '1')->first();
         $Users = User::all();
         
         $roles = Role::all();
         return view('Admin.Reader.profile')->with([
       
-        'users'=> $Users,
-        'roles' => $roles,
-        'settings' => $settings,
-        'features' => $features  
+         'users'=> $Users,
+        'roles' => $roles
         ]);
     }
 }

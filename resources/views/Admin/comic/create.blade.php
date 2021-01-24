@@ -3,7 +3,7 @@
 
 @section('content')
 
-
+@include('partials.alert')
 <h1 class=" font-bold  md:text-xl hover:text-yellow-500 py-4 w-32">Add Comic</h1>
 
 @if ($errors->any())

@@ -30,7 +30,15 @@ dd (username);
 
 
 
+// menu for nav drop down bar
 
+const change = document.querySelector('#change');
+const menudrop = document.querySelector('#changecolor');
+
+change.addEventListener('click', (e) => 
+    menudrop.classList.add('text-red-500')
+
+);
 
 
 

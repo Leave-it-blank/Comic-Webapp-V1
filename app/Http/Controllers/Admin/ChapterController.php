@@ -123,13 +123,13 @@ class ChapterController extends Controller
 
          if( $chapter->save())
            {
-             $request->session()->flash('success', $chapter->number.'has been updated.');
-             return redirect()->route('admin.comics.index')->with('success', $chapter->number .' has been updated!');
+             $request->session()->flash('success', $chapter->number.'  has been created.');
+             return redirect()->back();
            }
          else
            {
-              $request->session()->flash('erorr', $chapter->number .'has been not updated due to technical error.');
-              return redirect()->route('admin.comics.index')->with('error', 'There was an error during update!');
+              $request->session()->flash('erorr', 'Chapter has been not created due to technical error.');
+              return redirect()->back();
             }
        
 }
@@ -174,14 +174,28 @@ class ChapterController extends Controller
      * @param  \App\chapter  $chapter
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( comic $comics, $id)
     {
-        $id= $chapter->id;
-        $chapters =  DB::table('chapters')->where('id', $id)->get();
-      
-        return dd($chapters);
+        
 
-       
+      
+           
+        $chapter = DB::table('chapters')->where('id', $id);
+      
+
+
+        if($chapter->delete())
+        {
+         
+          return redirect()->back()->with('success', 'Chapter has been deleted.');
+        }
+      else
+        {
+          
+           return redirect()->back()->with('erorr', 'Chapter has been not deleted due to technical error.');
+         }
       
     }
+
+ 
 }

@@ -1,4 +1,4 @@
-<nav class="text-left">
+<nav class="text-left" >
      
 <div class=" px-4 m-2  cursor-pointer flex lg:hidden items-center justify-between">
           
@@ -12,47 +12,47 @@
 </div>
 
 
-<div id="banana" class="sidenav text-sm  lg:hidden">
+<div id="banana" class="sidenav text-sm lg:hidden"  style="background-color: {{$settings->admin_theme_name}}; color: {{$settings->admin_text_meta}};">
 
 
-<ul class="text-sm mt-6">
+<ul class="text-sm mt-6 ">
       
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/dashboard" class="block px-4 m-2 flex justify-end     hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>DashBoard</span>
               </a>
           </li>
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/profile" class="block px-4 flex m-2   hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-end   hover:text-yellow-500">
               <span>Profile</span>
             </a>
           </li>
          
         @can('admin')
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/admin/users" class="block  m-2 px-4 flex    hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-end   hover:text-yellow-500">
-              <span>Users</span>
+           <span>Users</span> 
             
             </a>
           </li> @endcan @can('create series')
     
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/createseries" class="block  m-2 px-4 flex justify-end   hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
               <span>Create Comics</span>
              </a>
           </li> @endcan @can('edit series')
-          <li class="py-1 text-gray-700 ">
+          <li class="py-1" >
             <a href="/admin/comics" class="block  m-2 px-4    hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-end   hover:text-yellow-500">
               <span>Comics</span>
              </a>
           </li>  @endcan
           @can('admin')
-          <li class="py-1 text-gray-700 ">
+          <li class="py-1">
             <a href="/admin/features" class="block  m-2 px-4 flex justify-end     hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Features</span>
              </a>
           </li>
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/settings" class="hidden px-4   m-2 flex justify-end    hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Settings</span>
                </a>
@@ -71,20 +71,20 @@
 
 
 
-<div class=" cursor-pointer flex  items-center justify-between">
+<div class=" cursor-pointer flex  items-center justify-between ">
         <ul class="text-lg mt-6  hidden lg:block">
-        <li class="text-gray-700  text-2xl py-1">
+        <li class="  text-2xl py-1">
             <a href="/" class="block px-4 m-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>CMS</span>
                </a>
           </li>
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/dashboard" class="block px-4 m-4 flex justify-start   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>DashBoard</span>
               <svg class="w-5 ml-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             </a>
           </li>
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/profile" class="block px-4 flex m-4  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-start   hover:text-yellow-500">
               <span>Profile</span>
               <svg  class="w-5 ml-2" sxmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -93,7 +93,7 @@
           </li>
          @can('admin')
           
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/admin/users" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent   hover:text-yellow-500">
               <span>Users</span>
               <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,7 +102,7 @@
             </a>
           </li> @endcan
           @can('create series')
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/createseries" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
               <span>Create</span>
               <svg class="w-5 ml-2"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -110,7 +110,7 @@
             </svg> </a>
           </li> @endcan
           @can('edit series')
-          <li class="py-1 text-gray-700 ">
+          <li class="py-1" >
             <a href="/admin/comics" class="block  m-4 px-4   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-start hover:text-yellow-500">
               <span>Comics</span>
               <svg class="w-5 ml-2"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -118,14 +118,14 @@
                 </svg></a>
           </li> @endcan
           @can('admin')
-          <li class="py-1 text-gray-700 ">
+          <li class="py-1" >
             <a href="/admin/features" class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>Features</span>
               <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
 </svg> </a>
           </li>
-          <li class="text-gray-700 py-1">
+          <li class=" py-1">
             <a href="/settings" class="block px-4  m-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span> Settings</span>
               <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

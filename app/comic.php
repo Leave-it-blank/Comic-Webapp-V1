@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\url;
+
 use Cviebrock\EloquentSluggable\Sluggable;
 class comic extends Model
 {
@@ -50,8 +51,24 @@ class comic extends Model
 		return $this->hasMany(Chapter::class, 'comic_id');
 	}
 
+	public function comicView()
+    {
+        return $this->hasMany(ComicView::class);
+    }
 
 
+	public function showcomic()
+{
+    if(auth()->id()==null){
+        return $this->postView()
+        ->where('ip', '=',  request()->ip())->exists();
+    }
+
+    return $this->postView()
+    ->where(function($postViewsQuery) { $postViewsQuery
+        ->where('session_id', '=', request()->getSession()->getId())
+        ->orWhere('user_id', '=', (auth()->check()));})->exists();  
+}
 
 
 	/*

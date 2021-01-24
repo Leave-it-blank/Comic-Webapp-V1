@@ -62,26 +62,37 @@ class ChapterController extends Controller
 
         {
 
+          
+
 
       
-     $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
+    
+            $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
+   
          
-         return View::make('series.chapter.comic_page')->with([
-  
-             'comics' => $comics,
-             'id' => $id,
-             'si' => $slug,
-         
-             
-             'chapters' => $chapters,
 
-             'comics' => $comics,
-             'settings' => $settings
+          
+          
+        
+            return View::make('series.chapter.comic_page')->with([
+   
+                'comics' => $comics,
+     
+                'id' => $id,
+    
+                'si' => $slug,
+          
+                'chapters' => $chapters,
+
+                'comics' => $comics,
+   
+                'settings' => $settings
  
              
             
              
-         ]);
+       
+             ]);
 
          }
        
