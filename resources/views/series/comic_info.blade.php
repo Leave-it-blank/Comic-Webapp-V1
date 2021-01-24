@@ -37,7 +37,7 @@
 						@foreach( $chapters as $chapter)
 					  <!-- Grid column -->
 					  <div class=" flex flex-col p-1 justify-items-center sm:w-1/3 lg:w-1/4">
-						<a class="flex-1 px-5 py-0 bg-white rounded-lg justify-items-center shadow-lg" href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug , 'chapter' => $chapter->number]) }}"> Chapter {{ $chapter->number}} 
+						<a class="flex-1 px-5 py-0  rounded-lg justify-items-center shadow-lg" href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug , 'chapter' => $chapter->number]) }}"> Chapter {{ $chapter->number}} 
 						  <!-- Card contents -->
 						 
 						<br>  <span class="mute text-sm text-gray-500">   {{ $chapter->name }} </span> 
@@ -66,7 +66,7 @@
 						@foreach( $chapters as $chapter)
 					  <!-- Grid column -->
 					  <div class="w-1/2 flex flex-col p-2 sm:w-1/4 lg:w-1/5">
-						<div class=" flex-1 px-5 py-2 bg-white rounded-lg shadow-lg">
+						<div class=" flex-1 px-5 py-2 rounded-lg shadow-lg">
 						  <!-- Card contents -->
 						  <a href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug , 'chapter' => $chapter->number]) }}" class=""> Chapter {{ $chapter->number}}  </a>
 						  <br>    <span class="mute text-sm text-gray-500">  {{ $chapter->name }} </span> 

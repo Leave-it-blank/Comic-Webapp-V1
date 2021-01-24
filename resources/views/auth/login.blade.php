@@ -7,8 +7,8 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
   <div class="max-w-md w-full">
     <div>
-      <img class="mx-auto h-auto w-auto" src="storage/logo/site.png" alt="Workflow">
-      <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
+     
+      <h2 class="mt-6 text-center text-3xl leading-9 font-extrabold text-yellow-400" >
         Sign in to your account
       </h2>
      
@@ -40,7 +40,7 @@
       <div class="mt-6 flex items-center justify-between">
         <div class="flex items-center">
           <input  type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }} class="form-checkbox h-4 w-4 text-yellow-500 transition duration-150 ease-in-out">
-          <label for="remember" class="ml-2 block text-sm leading-5 text-gray-900">
+          <label for="remember" class="ml-2 block text-sm leading-5 text-red-600">
             Remember me
           </label>
         </div>

@@ -20,7 +20,8 @@
 
 @include('inc.navbar')
 
-<body>
+<body style="background-color: {{$settings->theme_name}}; color: {{ $settings->text_meta }};">
+  
 <div id="app" >
      <div class="py-5" style="min-height: 770px !important;" >
     
@@ -28,6 +29,8 @@
       
 
      </div>
+
+     @include('inc.disq')
     </div>
 
       <!-- jQuery first,scripts js -->

@@ -2,7 +2,7 @@
      <nav class="text-right  bg-white-200" >
         <div class="flex justify-between items-center">
          <ul class=" inline-flex "> <h1 class="font-bold uppercase p-4 border-b border-gray-100">
-            <a href="/" class="text-xl m-2 pl-2 hover:text-yellow-600 tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300">Cms</a>
+            <a href="/"  style="color: {{ $settings->site_text_meta }} ;"class="text-xl m-2 pl-2 hover:text-yellow-600 tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300">{{ $settings->site_name }}</a>
           </h1>
           <div class=" grid grid-cols-3 divide-x divide-gray-400 flex justify-start items-center  p-4 border-b border-gray-100 hidden md:block">
             <a href="/" class=" p-2 text-xs hover:text-yellow-500 tracking-widest">Home</a>
@@ -17,10 +17,10 @@
                 <span class="rounded-xl shadow-sm">
                 <ul class=" inline-flex "> 
                    <!--Support us! -->
-                   <a class="m-3 hover:text-red-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500" href="#">
+                   <a class="m-3 hover:text-red-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500" href="{{$settings->patreon_tag}}">
                            <i class="fab fa-patreon "></i>
                        </a>
-                       <a class="m-3 hover:text-blue-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500 " href="#">
+                       <a class="m-3 hover:text-blue-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500 " href="{{$settings->discord_tag}}">
                            <i class="fab fa-discord"></i>
                        </a>
 
@@ -72,6 +72,17 @@
               <svg class="w-5 ml-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </a>
           </li>
+          <li class="py-1">
+            <div href="/comics" class=" px-4 flex hover:bg-opacity-50 hover:text-yellow-500 justify-end border-r-4 border-white hover:border-yellow-500">
+              
+              <a class="m-3 hover:text-red-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500" href="{{$settings->patreon_tag}}">
+                <i class="fab fa-patreon "></i>
+            </a>
+            <a class="m-3 hover:text-blue-700 hover:shadow-lg transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-500 " href="{{$settings->discord_tag}}">
+                <i class="fab fa-discord"></i>
+            </a>   </div>
+        
+          </li>
           @guest
          
           <li class="py-1">
@@ -100,13 +111,16 @@
   
           </li>
           </a>
+
+          <li class="py-1">
                                     <a class="block px-4 flex hover:bg-opacity-50 hover:text-red-500 justify-end border-r-4 hover:border-yellow-500 border-white"
                                       href="/dashboard">
                                      Dashboard
                                       <svg class="w-5 ml-2"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
 </svg>
-                                    </a>
+                                    </a> </li>
+                                    <li class="py-1">
           <a class="block px-4 flex hover:bg-opacity-50 hover:text-red-500 justify-end border-r-4 hover:border-yellow-500 border-white" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -120,7 +134,7 @@
                                         @csrf
                                     </form> 
      @endguest
-
+    </li>
       
          
          </ul>

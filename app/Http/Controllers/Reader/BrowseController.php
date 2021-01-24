@@ -17,9 +17,20 @@ class BrowseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+
+    {      
+        
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
         $comics = Comic::all();
-        return view('Comics')->with('comics', $comics);
+        return view('Comics')->with([
+            
+            
+            'comics' => $comics,
+        
+            'settings' => $settings,
+            'features' => $features
+        ]);
     }
 
     /**

@@ -19,10 +19,10 @@
    <!--<script src="https://kit.fontawesome.com/9fb6a65232.js" crossorigin="anonymous"></script>
  -->
 </head>
-
+<?php   $settings =  DB::table('settings')->where('id', '1')->first(); ?>
 @include('inc.navbar')
 
-<body>
+<body style="background-color: {{$settings->theme_name}}; color: {{$settings->text_meta}};">
 
 
     <div id="app" class="layout-row">

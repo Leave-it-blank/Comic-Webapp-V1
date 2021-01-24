@@ -7,7 +7,7 @@ use App\chapter;
 use Illuminate\Http\Request;
 
 use App\comic;
-
+use App\settings;
 use App\carousel;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -56,29 +56,43 @@ class ChapterController extends Controller
      */
     public function show(comic $comic, $id, $slug, $number)
     {
-
+        $settings =  DB::table('settings')->where('id', '1')->first();
 
         if( $comics = Comic::find($id ))
 
         {
 
+          
+
 
       
-     $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
+    
+            $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
+   
          
-         return View::make('series.chapter.comic_page')->with([
-  
-             'comics' => $comics,
-             'id' => $id,
-             'si' => $slug,
-         
-             
-             'chapters' => $chapters
+
+          
+          
+        
+            return View::make('series.chapter.comic_page')->with([
+   
+                'comics' => $comics,
+     
+                'id' => $id,
+    
+                'si' => $slug,
+          
+                'chapters' => $chapters,
+
+                'comics' => $comics,
+   
+                'settings' => $settings
  
              
             
              
-         ]);
+       
+             ]);
 
          }
        

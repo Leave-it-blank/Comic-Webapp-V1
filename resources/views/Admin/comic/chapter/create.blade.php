@@ -5,15 +5,7 @@
 
 <h1 class=" font-bold  md:text-xl hover:text-yellow-500 py-4 w-32">Add Chapter</h1>
 
-@if ($errors->any())
-      <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-      </div><br />
-    @endif
+@include('partials.alert')
 
     <div class="w-full  m-4 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">

@@ -18,7 +18,7 @@ New Releases
                     </div> </a>
                     
                     <div class="px-2 ">
-                     <h3>   <a  href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class="text-gray-700 hover:text-yellow-600 uppercase">{{ $chapter ->comic->title }}  </a> </h3>
+                     <h3>   <a  href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class=" hover:text-yellow-600 uppercase">{{ $chapter ->comic->title }}  </a> </h3>
                         <span class="text-gray-500 mt-2"> {{ $chapter->updated_at }} </span>
                     </div>
                    

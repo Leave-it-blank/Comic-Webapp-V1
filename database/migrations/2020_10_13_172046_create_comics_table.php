@@ -27,6 +27,7 @@ class CreateComicsTable extends Migration
 			$table->text('author')->nullable();
 			$table->text('artist')->nullable();
 			$table->text('country')->nullable();
+			$table->integer('view_count')->default(0);
 			$table->string('url', 255)->nullable();
 			$table->timestamps();
 
@@ -44,6 +45,7 @@ class CreateComicsTable extends Migration
 		    $table->boolean('ongoing') ->default(true);
 			$table->string('cover')->nullable();
 			$table->bigInteger('comic_id')->unsigned();
+			$table->integer('view_count')->default(0);
 			$table->timestamps();
 			$table->string('url', 255)->nullable();
 			$table->foreign('comic_id')->references('id')->on('comics')->onDelete('CASCADE')->onUpdate('CASCADE');

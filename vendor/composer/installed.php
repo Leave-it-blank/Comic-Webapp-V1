@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '81227c47069eb84251e8e976998db8b12265e3c5',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -53,6 +53,15 @@
       array (
       ),
       'reference' => '4543263ebcb889845abef09ea40979a1a454612d',
+    ),
+    'cyrildewit/eloquent-viewable' => 
+    array (
+      'pretty_version' => 'v6.0.2',
+      'version' => '6.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '699294489e397c18a59ff9fafadde8154be85c02',
     ),
     'davedevelopment/hamcrest-php' => 
     array (
@@ -417,6 +426,15 @@
         0 => 'v7.28.4',
       ),
     ),
+    'jaybizzle/crawler-detect' => 
+    array (
+      'pretty_version' => 'v1.2.103',
+      'version' => '1.2.103.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '3efa2860959cc971f17624b40bf0699823f9d0f3',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -435,12 +453,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '81227c47069eb84251e8e976998db8b12265e3c5',
     ),
     'laravel/tinker' => 
     array (

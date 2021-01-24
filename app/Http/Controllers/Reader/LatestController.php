@@ -19,6 +19,8 @@ class LatestController extends Controller
      */
     public function index()
     {
+        $settings =  DB::table('settings')->where('id', '1')->first();
+        $features =  DB::table('features')->where('id', '1')->first();
        
         $comics = Comic::all();
         $chapters = Chapter::orderBy('id', 'desc')->limit(18)->get();
@@ -27,7 +29,9 @@ class LatestController extends Controller
             'comics' => $comics,
             
            
-            
+            'settings' => $settings,
+            'features' => $features,
+           
             'chapters' => $chapters,
 
          

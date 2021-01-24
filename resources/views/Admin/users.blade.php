@@ -3,9 +3,9 @@
 @section('content')
 
 
-<div class="container mx-auto">
+<div class="container mx-auto overflow-x-auto  ">
 <div class="flex flex-col">
-  <div class="-my-2 overflow-x-auto  sm:-mx-4 lg:-mx-8">
+  <div class="-my-2  sm:-mx-4 lg:-mx-8">
     <div class="py-2 align-middle inline-block min-w-full sm:px lg:px-8">
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
@@ -34,19 +34,19 @@
           </thead>
 
 
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class=" divide-y divide-gray-200">
             <tr>@foreach ($users as $user)
               <td class="px py-4 whitespace-no-wrap">
               
                 <div class="flex items-center">
                 
-                <div class="text-sm  m-4 leading-5 text-gray-900"> {{ $user->id }}</div>
+                <div class="text-sm  m-4 leading-5 "> {{ $user->id }}</div>
                   <div class="flex-shrink-0 h-10 w-10">
                     <img class="h-10 w-10 rounded-full" src="{{ $user->cover }}" alt="">
                   </div>
               
                   <div class="ml-4">
-                    <div class="text-sm leading-5 font-medium text-gray-900">
+                    <div class="text-sm leading-5 font-medium ">
                     {{ $user->name }}
                     </div>
                     </div>
