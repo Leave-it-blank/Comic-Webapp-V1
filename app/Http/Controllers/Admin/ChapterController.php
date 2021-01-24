@@ -178,6 +178,22 @@ class ChapterController extends Controller
     public function update(Request $request, $id, $number)
     {
 
+
+      $chapter_delete_old = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+      
+   
+      foreach (json_decode($chapter_delete_old->cover) as $page)
+
+        {
+         if(\File::exists(public_path($chapter_delete_old->url.($page)))){
+
+
+            \File::delete(public_path($chapter_delete_old->url.($page)));
+        
+           }
+
+        }
+
       $chapter_update_id = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
        $request->validate([
         'name'=>'required',
@@ -253,14 +269,28 @@ class ChapterController extends Controller
     public function destroy( comic $comics, $id)
     {
         
-
+     # @foreach (json_decode($chapter->cover) as $page)
+     # <img src="/{{$chapter->url}}{{($page)}}" class="block ">
+     #   @endforeach
       
            
-        $chapter = DB::table('chapters')->where('id', $id);
+         $chapter = DB::table('chapters')->where('id', $id)->first();
       
+   
+           foreach (json_decode($chapter->cover) as $page)
+     
+             {
+              if(\File::exists(public_path($chapter->url.($page)))){
 
 
-        if($chapter->delete())
+                 \File::delete(public_path($chapter->url.($page)));
+             
+                }
+
+             }
+             $chapter_delete = DB::table('chapters')->where('id', $id); #why twice?? because you can't use save() or delete() after you call ->first()
+    
+        if($chapter_delete->delete())
         {
          
           return redirect()->back()->with('success', 'Chapter has been deleted.');

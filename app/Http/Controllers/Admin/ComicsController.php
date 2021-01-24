@@ -9,6 +9,7 @@ use DB;
 use View;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use File;
 
 
 class ComicsController extends Controller
@@ -227,7 +228,23 @@ class ComicsController extends Controller
     public function destroy($id)
     {
         $comic = Comic::find($id);
-        $comic->delete();
+
+       
+
+  
+      if(\File::exists(public_path($comic->cover))){
+
+          \File::delete(public_path($comic->cover));
+
+          $comic->delete();
+
+           }else{
+
+             dd('File does not exists.');
+
+              }
+        
+      
 
         return redirect()->route('admin.comics.index')->with('success', $comic->title .' has been deleted!');
     }
