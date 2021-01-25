@@ -88,7 +88,13 @@ class ChapterController extends Controller
         $comics = Comic::find($comics->id);
 
   
-       
+        $validated = $request->validate([
+          
+          'name' => 'string|max:40',
+          'number' => 'integer',
+          'volume' => 'string|max:40',
+     
+        ]);
         
         
         
@@ -104,7 +110,7 @@ class ChapterController extends Controller
 
          }
           
-
+      
 
         $chapter = new Chapter([
             'name' => $request->get('name'),           
@@ -118,17 +124,17 @@ class ChapterController extends Controller
         ]); 
         
    
-        }
+      
 
 
          if( $chapter->save())
            {
              $request->session()->flash('success', $chapter->number.'  has been created.');
              return redirect()->back();
-           }
+           }   }
          else
            {
-              $request->session()->flash('erorr', 'Chapter has been not created due to technical error.');
+              $request->session()->flash('error', 'Chapter has been not created! Error can be due to images missing or empty. ');
               return redirect()->back();
             }
        
@@ -179,20 +185,9 @@ class ChapterController extends Controller
     {
 
 
-      $chapter_delete_old = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+     
       
    
-      foreach (json_decode($chapter_delete_old->cover) as $page)
-
-        {
-         if(\File::exists(public_path($chapter_delete_old->url.($page)))){
-
-
-            \File::delete(public_path($chapter_delete_old->url.($page)));
-        
-           }
-
-        }
 
       $chapter_update_id = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
        $request->validate([
@@ -205,12 +200,30 @@ class ChapterController extends Controller
          if( $chapter_update = chapter::find($cid))
          {
 
+
+      
+
           $chapter_update->name =  $request->get('name');
           $chapter_update->number = $request->get('number');
           $chapter_update->volume = $request->get('volume');
 
           if($request->hasFile('image'))
           {
+
+            $chapter_delete_old = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+
+            foreach (json_decode($chapter_delete_old->cover) as $page)
+
+            {
+                if(\File::exists(public_path($chapter_delete_old->url.($page)))){
+  
+  
+                 \File::delete(public_path($chapter_delete_old->url.($page)));
+        
+               }
+  
+            }
+
            $names = [];
                foreach($request->file('image') as $image)
           {

@@ -6,15 +6,15 @@
 
 
 
-        <div class="container flex justify-center">
-    <div class="row justify-content-center">
+  <div class="container flex sm:justify-center overflow-auto ">
+    <div class="row  " >
           <!-- bead come don't touch yet -->
         
 
-        <div class="col-md-8">
+        <div class="col-md-8 shadow-2xl">
      
-            <div class="m-3 block  " style="background-color: transparent;">
-            <div class="p-4"> Edit  {{$user->name}}
+            <div class="m-5 block  " >
+            <div class="p-4 "> Edit  {{$user->name}}
 
 
             <div class=" p-4">
@@ -23,10 +23,10 @@
 
             <!-- email/user name-->
             <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label p-4 text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="  p-4 text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class=" p-2 m-3 @error('email') is-invalid @enderror" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class=" p-2 m-3 @error('email') is-invalid @enderror" style="background-color: transparent;" name="email" value="{{ $user->email }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -36,10 +36,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label p-4 text-md-right">{{ __('UserName') }}</label>
+                            <label for="name" class=" p-4 text-md-right">{{ __('UserName') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="p-2 m-3 @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}"  autofocus>
+                                <input id="name" type="text" class="p-2 m-3 @error('name') is-invalid @enderror" style="background-color: transparent;" name="name" value="{{ $user->name }}"  autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -49,10 +49,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="country" class="col-md-4 col-form-label p-4 text-md-right">{{ __('Country') }}</label>
+                            <label for="country" class=" p-4 text-md-right">{{ __('Country') }}</label>
 
                             <div class="col-md-6">
-                                <input id="country" type="text" class="p-2 m-3 @error('country') is-invalid @enderror" name="country" value="{{ $user->country }}"  autofocus>
+                                <input id="country" type="text" class="p-2 m-3 @error('country') is-invalid @enderror"  style="background-color: transparent;" name="country" value="{{ $user->country }}"  autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">

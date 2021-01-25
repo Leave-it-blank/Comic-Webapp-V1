@@ -52,14 +52,14 @@ class ComicsController extends Controller
 
     {
         $request->validate([
-            'title'=>'required',
+            'title'=>'required|string',
             'country'=>'required',
             
             
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
-            'image' => 'mimes:jpeg,png|max:1024',
+            'image' => 'mimes:jpeg,png|max:4096',
            
             
         ]);
@@ -176,7 +176,7 @@ class ComicsController extends Controller
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
-            'image' => 'mimes:jpeg,png|max:1024',
+            'image' => 'mimes:jpeg,png|max:4096',
         ]);
 
 
@@ -188,7 +188,8 @@ class ComicsController extends Controller
         
         $comic->country = $request->get('country');
         
-
+        if($request->hasFile('image'))
+        {
         if($request->file('image')->isValid())
         {
    
@@ -204,12 +205,13 @@ class ComicsController extends Controller
 
            $comic->cover = $url;
            
-        }
+        }}
        if( $comic->save())
         {
             $request->session()->flash('success', $comic->title .'has been updated.');
             return redirect()->route('admin.comics.index')->with('success', $comic->title .' has been updated!');
         }
+    
         else
         {
             $request->session()->flash('erorr', $comic->title .'has been not updated due to technical error.');

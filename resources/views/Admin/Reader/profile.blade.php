@@ -58,7 +58,9 @@
           Roles:
         </dt>
         <dd class="mt-1 text-sm leading-5 sm:mt-0 sm:col-span-2">
-        {{ Auth::user()->roles->pluck('name') }}
+      
+
+        {{ implode(',' , Auth::user()->roles() ->get() ->pluck('name') ->toArray()) }}
         </dd>
       </div>
       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

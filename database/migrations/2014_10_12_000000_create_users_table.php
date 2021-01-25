@@ -27,6 +27,8 @@ class CreateUsersTable extends Migration
             $table->boolean('is_admin')->default(false);
             $table->boolean('active_reader')->default(true);
             $table->string('url', 255)->nullable();
+            $table->string('theme_name', 255) ->default('#0f0f0f'); #body color
+            $table->string('site_text_meta' , 255)->default('red'); #later use
             $table->rememberToken();
             $table->timestamps();
         });

@@ -27,7 +27,7 @@
 </head>
 <?php   $settings =  DB::table('settings')->where('id', '1')->first(); ?>
 
-<body id="page-top"  style="background-color: {{$settings->admin_theme_name}}; color: {{$settings->admin_text_meta}};">
+<body id="page-top"  class="text-xs" style="background-color: {{$settings->admin_theme_name}}; color: {{$settings->admin_text_meta}};" >
 
 
 
@@ -38,7 +38,7 @@
 
 
 
-<div class="grid lg:grid-cols-6">
+<div class="grid lg:grid-cols-6" >
     <div class="lg:col-span-1 lg:flex lg:justify-end">
    @include('inc.admin_sidebar')
     </div>

@@ -1,4 +1,4 @@
-<nav class="text-left" >
+<nav class="text-left w-full "  >
      
 <div class=" px-4 m-2  cursor-pointer flex lg:hidden items-center justify-between">
           
@@ -12,7 +12,7 @@
 </div>
 
 
-<div id="banana" class="sidenav text-sm lg:hidden"  style="background-color: {{$settings->admin_theme_name}}; color: {{$settings->admin_text_meta}};">
+<div id="banana" class="sidenav text-sm lg:hidden"  style="background-color: {{$settings->admin_siderbar_name}}; color: {{$settings->admin_side_text_meta}};">
 
 
 <ul class="text-sm mt-6 ">
@@ -71,15 +71,15 @@
 
 
 
-<div class=" cursor-pointer flex  items-center justify-between ">
-        <ul class="text-lg mt-6  hidden lg:block">
+<div class=" cursor-pointer flex  items-center justify-between " style="background-color: {{$settings->admin_siderbar_name}}; color: {{$settings->admin_side_text_meta}};">
+        <ul class="text-sm mt-6  hidden lg:block ml-4" style="height: 912px; ">
         <li class="  text-2xl py-1">
             <a href="/" class="block px-4 m-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>CMS</span>
                </a>
           </li>
           <li class=" py-1">
-            <a href="/dashboard" class="block px-4 m-4 flex justify-start   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
+            <a href="/dashboard" class="block px-4 m-4  flex justify-start   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
               <span>DashBoard</span>
               <svg class="w-5 ml-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             </a>

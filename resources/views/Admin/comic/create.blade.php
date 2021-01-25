@@ -2,18 +2,12 @@
 
 
 @section('content')
-
+<div class ="container shadow-4xl overflow-auto sm:overflow-hidden">
 @include('partials.alert')
 <h1 class=" font-bold  md:text-xl hover:text-yellow-500 py-4 w-32">Add Comic</h1>
 
-@if ($errors->any())
-      <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-      </div><br />
+    @if ($errors->any())
+     @include('partials.alert')
     @endif
     <div class="flex container shadow justify-center">
     <form class="w-full max-w-lg m-4" method="post" action="{{ route('admin.comics.store') }}"  enctype="multipart/form-data">
@@ -24,17 +18,18 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
         Title:
       </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-title" type="text"  name="title" placeholder="Solo Leveling">
+      <input class="appearance-none block w-full bg-transparent border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-transparent" id="grid-title" type="text"  name="title" placeholder="Solo Leveling">
       
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach
+      @error('title')
+      <p class="text-red-500 text-xs italic">{{$errors}}</p>
+      @enderror
+
     </div>
     <div class="w-full md:w-2/3 px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-desc">
         Description:
       </label>
-      <input class="appearance-none block h-full w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-desc" type="text"  name="desc" placeholder="it sucks">
+      <textarea input class="appearance-none block h-full w-full bg-transparent  border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-transparent focus:border-gray-500" id="grid-desc" type="text"  name="desc" > Description </textarea>
     </div>
   </div>
 
@@ -43,19 +38,15 @@
   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
         Author:
       </label>
-      <input class="appearance-none block w-1/2 bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-author" type="text"  name="author" placeholder="yeye">
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach
+      <input class="appearance-none block w-1/2 bg-transparent border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-transparent" id="grid-author" type="text"  name="author" placeholder="yeye">
+  
             </div>
             <div class="w-full md:w-1/2 px-3">
   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
         Artist:
       </label>
-      <input class="appearance-none block w-1/2 bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-artist" type="text"  name="artist" placeholder="turtle">
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach
+      <input class="appearance-none block w-1/2 bg-transparent  border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-transparent" id="grid-artist" type="text"  name="artist" placeholder="turtle">
+  
             </div>
   </div>
 
@@ -67,7 +58,7 @@
         Country:
       </label>
       <div class="relative">
-        <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-country" type="text"  name="country">
+        <select class="block appearance-none w-full bg-transparent border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-transparent focus:border-gray-500" id="grid-country" type="text"  name="country">
           <option>Korea</option>
           <option>China</option>
           <option>Japan</option>
@@ -84,11 +75,13 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="image">
       Choose Thumbnail:
       </label>
-      <input class="block appearance-none w-full bg-gray-200 border " id="image" type="file" name="image">
-      <p class="text-gray-500 text-xs italic">Make sure to use 600x450</p>
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach
+      <input class="block appearance-none w-full bg-transparent border  " required id="image" type="file" name="image">
+      <div class="m-4 container"> <p class="text-gray-500 text-xs italic">{{'Make sure to 450 x 600 (wxh) Cover for best results'}}</p>
+        <p class="text-gray-500 text-xs italic">{{'Png, jpg, jpeg'}}</p>
+        <p class="text-gray-500 text-xs italic">{{'Title is fixed once url is made  So make sure to name properly.Also 40 characters only :P'}}</p> </div>
+      @error('image')
+      <p class="text-red-500 text-xs italic">{{$errors}}</p>
+      @enderror
     </div>
 
     
@@ -97,5 +90,5 @@
 </form>
 </div>
 
-</div>
+</div></div>
 @endsection

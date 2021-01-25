@@ -167,6 +167,9 @@ class CarouselController extends Controller
         $carousels->position = $request->get('position');
         $carousels->classic = $request->get('classic');
 
+        
+        if($request->hasFile('image'))
+        {
         if($request->file('image')->isValid())
         {
         $extension = $request->image->extension();
@@ -180,7 +183,7 @@ class CarouselController extends Controller
         $url = Storage::url( $definedpath. $validated['title'].".".$extension);
 
          $carousels->cover = $url;
-        }
+        }}
 
 
        if( $carousels->save())

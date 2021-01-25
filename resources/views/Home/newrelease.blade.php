@@ -12,14 +12,14 @@ New Releases
                   <a  href="{{ route('series.chapter.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug , 'chapter' => $chapter->number]) }}"  >
                     <div class="overlay"> Chapter {{ $chapter ->number }} </div>  <div class="flex justify-center">
                     
-                  <img src="{{ $chapter->comic->cover }}" class="m-4  rounded-sm hidden md:block" style=" height: 400px;    width: 370px;">
+                  <img src="{{ $chapter->comic->cover }}" class="m-4  rounded-sm hidden md:block" style=" height: 300px;    width: 300px;">
                   <img src="{{ $chapter->comic->cover }}" class="m-4 rounded-sm md:hidden" style=" height: auto;    width: 400px;">
                   
                     </div> </a>
                     
                     <div class="px-2 ">
-                     <h3>   <a  href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class=" hover:text-yellow-600 uppercase">{{ $chapter ->comic->title }}  </a> </h3>
-                        <span class="text-gray-500 mt-2"> {{ $chapter->updated_at }} </span>
+                     <h3>   <a  href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class=" hover:text-yellow-600 uppercase" style="color:{{$settings->site_text_meta }};">{{ $chapter ->comic->title }}  </a> </h3>
+                        <span class="text-gray-500 mt-2"> {{ $chapter->updated_at->diffForHumans() }} </span>
                     </div>
                    
                 </div>

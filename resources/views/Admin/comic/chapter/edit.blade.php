@@ -3,6 +3,7 @@
 
 @section('content')
 
+<div class ="container shadow-4xl overflow-auto sm:overflow-hidden">
 <h1 class=" font-bold  md:text-xl hover:text-yellow-500 py-4 w-48">  {{ 'Edit Chapter ID: '.$chapter->id}}</h1>
 
 @include('partials.alert')
@@ -28,56 +29,57 @@
   <div class="flex flex-wrap -mx-3 mb-6">
   
     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-title">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-name">
         Name:
       </label>
-      <input value="{{ $chapter->name }}" class="appearance-none block w-full bg-gray-200 text-gray-700 border  rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-name" type="text"  name="name" placeholder="Prologue">
+      <input value="{{ $chapter->name }}" class="appearance-none block w-full bg-transparent   rounded py-3 px-4 mb-3 leading-tight focus:outline-none " id="grid-name" type="text"  name="name" placeholder="Prologue">
       
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach
+      @error('name')
+      <p class="text-red-500 text-xs italic">{{$errors}}</p>
+      @enderror
     </div>
     <div class="w-full md:w-2/3 px-3">
-      <label   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-desc">
+      <label   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-number">
         Number:
       </label>
-      <input value="{{ $chapter->number }} " class="appearance-none block h-full w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-number" type="text"  name="number" placeholder="01">
-      @foreach ($errors->all() as $error)
-      <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-            @endforeach </div>
+      <input value="{{ $chapter->number }} " class="appearance-none block w-full bg-transparent   rounded py-3 px-4 mb-3 leading-tight focus:outline-none" id="grid-number" type="text"  name="number" placeholder="01">
+      @error('number')
+      <p class="text-red-500 text-xs italic">{{$errors}}</p>
+      @enderror </div>
   </div>
   <div class="w-full md:w-2/3 px-3">
-    <label   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-desc">
+    <label   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-volume">
      Volume:
     </label>
-    <input value="{{ $chapter->volume }} " class="appearance-none block h-full w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-volume" type="text"  name="volume" placeholder="01">
-    @foreach ($errors->all() as $error)
-    <p class="text-red-500 text-xs italic">Please fill out this field.</p>
-          @endforeach </div>
+    <input value="{{ $chapter->volume }} " class="appearance-none block h-full w-full bg-transparent  border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none " id="grid-volume" type="text"  name="volume" placeholder="01">
+    @error('volume')
+    <p class="text-red-500 text-xs italic">{{$errors}}</p>
+    @enderror </div>
 </div>
 
-  <div class="flex flex-wrap -mx-3 mb-6 pt-6">
  
-
+<div class="flex flex-wrap -mx-3 mb-2 justify-center">
+   
   
-  <div class="flex flex-wrap -mx-3 mb-2">
-
     
-    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+  <div class="w-full md:w-1/2 px-3 mb-6  ml-6  md:mb-0 ">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="image">
       Choose Pages:
       </label>
-      <input class="block appearance-none w-full bg-gray-200 border "  required type="file" class="form-control" name="image[]" placeholder="address" multiple>
-     
+      <input class="block appearance-none w-full bg-transparent "   type="file" class="form-control" name="image[]" placeholder="address" multiple>
+      <div class="m-4 container"> <p class="text-gray-500 text-xs italic">Make sure to use 001 002 003 naming</p>
+        <p class="text-gray-500 text-xs italic">Png, jpg, jpeg</p>
+        <p class="text-gray-500 text-xs italic">Pages can be of any width and height</p> </div>
       @foreach ($errors->all() as $error)
       <p class="text-red-500 text-xs italic">Make sure to use decent size.</p>
             @endforeach
-    </div>
 
-    
-  </div>
-  <button type="submit" class=" profile-btn mx-auto hover:text-yellow-500 border transition ease-out duration-500 justify-center">Upload</button>
+  
+
+  <button type="submit" class=" profile-btn mx-auto w-20 h-8 bg-yellow-500 ml-6 mt-5  hover:text-yellow-500 hover:bg-red-500 border transition ease-out duration-500 justify-center">Upload</button>
+</div>
 </form>
+
 </div>
 
 </div>

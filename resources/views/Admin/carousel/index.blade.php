@@ -27,13 +27,13 @@
               <th class="px py-3 bg-gray-50"></th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class=" divide-y divide-gray-200">
             <tr>   @foreach($carousels as $carousel)
               <td class="px py-4 whitespace-no-wrap">
                 <div class="flex items-center">
                  
                   <div class="ml-4">
-                    <div class="text-sm leading-5 font-medium text-gray-900">
+                    <div class="text-sm leading-5 font-medium ">
                     {{$carousel->id}}
                     </div>
                     <div class="text-sm leading-5 text-gray-500">
@@ -43,7 +43,7 @@
                 </div>
               </td>
               <td class="px py-4 whitespace-no-wrap">
-                <div class="text-sm leading-5 text-gray-900">{{$carousel->title}}</div>
+                <div class="text-sm leading-5 ">{{$carousel->title}}</div>
                 <div class="text-sm leading-5 text-gray-500"></div>
               </td>
               <td class="px py-4 whitespace-no-wrap">
