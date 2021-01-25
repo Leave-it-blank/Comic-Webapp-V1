@@ -1,4 +1,4 @@
-<div id="disqus_thread">{{ $settings->disq }}</div>
+<div id="disqus_thread"></div>
 <script>
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 

@@ -10,12 +10,12 @@ New Releases
 @foreach($chapters  as  $chapter)
                 <div class="w-full max-w-sm mx-auto  overflow-hidden">
                   <a  href="{{ route('series.chapter.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug , 'chapter' => $chapter->number]) }}"  >
-                    <div class="overlay"> Chapter {{ $chapter ->number }} </div>  <div class="flex justify-center">
+                    <div class="flex justify-center">
                     
-                  <img src="{{ $chapter->comic->cover }}" class="m-4  rounded-sm hidden md:block" style=" height: 300px;    width: 300px;">
-                  <img src="{{ $chapter->comic->cover }}" class="m-4 rounded-sm md:hidden" style=" height: auto;    width: 400px;">
+                  <img src="{{ $chapter->comic->cover }}" class="  rounded-sm hidden md:block" style=" height: 300px;    width: 300px;">
+                  <img src="{{ $chapter->comic->cover }}" class="m-2 rounded-sm md:hidden" style="  height: auto;    width: auto">
                   
-                    </div> </a>
+                    </div> </a> <span class="bottom-left-card"> Chapter {{ $chapter ->number }} </span> 
                     
                     <div class="px-2 ">
                      <h3>   <a  href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class=" hover:text-yellow-600 uppercase" style="color:{{$settings->site_text_meta }};">{{ $chapter ->comic->title }}  </a> </h3>

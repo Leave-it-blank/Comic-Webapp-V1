@@ -123,4 +123,13 @@
   .flip-box-back {
     transform: rotateX(180deg);
   }
-  
+  .bottom-left-card {
+    position: relative;
+    bottom: 40px;
+    background: rgb(37, 37, 37);
+    color: white;
+    left: 10px;
+    margin: 2px;
+    padding: 5px;
+    opacity: 80%;
+  }
