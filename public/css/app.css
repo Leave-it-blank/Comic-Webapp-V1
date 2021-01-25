@@ -12435,38 +12435,133 @@ body{
 }
 
 
-  .carousel-open:checked + .carousel-item {
-  position: static;
-  opacity: 100;
-}
-
-.carousel-item {
-  transition: opacity 0.6s ease-out;
-}
-
-#carousel-1:checked ~ .control-1,
+  /*.carousel-open:checked + .carousel-item {
+    position: static;
+    opacity: 100;
+  }
+  .carousel-item {
+    -webkit-transition: opacity 0.6s ease-out;
+    transition: opacity 0.6s ease-out;
+  }
+  #carousel-1:checked ~ .control-1,
   #carousel-2:checked ~ .control-2,
   #carousel-3:checked ~ .control-3 {
-  display: block;
-}
-
-.carousel-indicators {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  text-align: center;
-  z-index: 10;
-}
-
-#carousel-1:checked ~ .control-1 ~ .carousel-indicators li:nth-child(1) .carousel-bullet,
+    display: block;
+  }
+  .carousel-indicators {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    bottom: 2%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10;
+  }
+  #carousel-1:checked ~ .control-1 ~ .carousel-indicators li:nth-child(1) .carousel-bullet,
   #carousel-2:checked ~ .control-2 ~ .carousel-indicators li:nth-child(2) .carousel-bullet,
   #carousel-3:checked ~ .control-3 ~ .carousel-indicators li:nth-child(3) .carousel-bullet
-  {
-  color: #2b6cb0;
+  { 
+    color: #2b6cb0;
+  }
+
+
+  * {box-sizing:border-box} */
+
+/* Slideshow container */
+
+.slideshow-container {
+  max-width: 1500px;
+  position: relative;
+  margin: auto;
+}
+
+/* Hide the images by default */
+
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* Position the "next button" to the right */
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/bullets/indicators */
+
+.dot {
+  position: relative;
+  bottom: 40px;
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
 }/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document

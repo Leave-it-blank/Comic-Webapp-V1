@@ -9,6 +9,7 @@ require('./sb');
 require('./jquery');
 require('./jquery.dataTables');
 require('./index')
+require('./carousel')
 
 
 
