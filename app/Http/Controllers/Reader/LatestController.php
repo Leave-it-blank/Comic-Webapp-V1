@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Reader;
 
+use App\chapter;
+use App\comic;
 use App\Http\Controllers\Controller;
 use App\page_view;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 use view;
-use App\comic;
-use App\chapter;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\SEOTools;
+
 
 class LatestController extends Controller
 {
@@ -19,24 +22,26 @@ class LatestController extends Controller
      */
     public function index()
     {
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        $features =  DB::table('features')->where('id', '1')->first();
+
+
+
+        $settings = DB::table('settings')->where('id', '1')->first();
+        $features = DB::table('features')->where('id', '1')->first();
+
+      
+        $chapters = Chapter::orderBy('id', 'desc')->paginate(10);
+
+
        
-        $comics = Comic::all();
-        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->get();
         return view('Latest')->with([
- 
+
             'comics' => $comics,
-            
-           
+
             'settings' => $settings,
             'features' => $features,
-           
+
             'chapters' => $chapters,
 
-         
-           
-            
         ]);
     }
     /**

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\carousel;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
-use View;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Storage;
+use View;
+use Illuminate\Support\Str;
 class CarouselController extends Controller
 {
-
-
 
     public function __construct()
     {
@@ -27,7 +24,7 @@ class CarouselController extends Controller
      */
     public function index()
     {
-        
+
         $carousels = carousel::all();
 
         return view('Admin.carousel.index')->with('carousels', $carousels);
@@ -51,51 +48,42 @@ class CarouselController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
-            'title'=>'required',
-            'position'=>'required',
-            
-            
-            
-            
+            'title' => 'required',
+            'position' => 'required',
+
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
             'image' => 'mimes:jpeg,png|max:1024',
         ]);
 
-        if($request->file('image')->isValid())
-     {
+        if ($request->file('image')->isValid()) {
 
-        $extension = $request->image->extension();
-        
-        
-       
-        $request->image->storeAs('/public/carousel', $validated['title']. ".".$extension);
-        
-        $definedpath = ('carousel/');
+            $extension = $request->image->extension();
 
-        $url = Storage::url( $definedpath. $validated['title'].".".$extension);
+            $randomString = Str::random(30);
 
-        $carousel = new Carousel([
-            'title' => $request->get('title'),
-            'position' => $request->get('position'),
-            'status' => $request->get('status'),
-            'classic' => $request->get('classic'),
-            
-            
-            'cover' => $url,
-            
-              
-           
-        ]);
-     
+            $request->image->storeAs('/public/carousel',   $randomString . "." . $extension);
 
-  
-        $carousel->save();
-        
-        return redirect()->route('admin.carousel.index')->with('success', $carousel->title. ' saved!',);
+            $definedpath = ('carousel/');
+
+            $url = Storage::url($definedpath .   $randomString . "." . $extension);
+
+            $carousel = new Carousel([
+                'title' => $request->get('title'),
+                'position' => $request->get('position'),
+                'status' => $request->get('status'),
+                'classic' => $request->get('classic'),
+
+                'cover' => $url,
+
+            ]);
+
+            $carousel->save();
+
+            return redirect()->route('admin.carousel.index')->with('success', $carousel->title . ' saved!', );
 
         }
     }
@@ -108,21 +96,15 @@ class CarouselController extends Controller
      */
     public function show(carousel $carousels, $id)
     {
-        if( $carousels = carousel::find($id))
-        {
-          
-           return View::make('Admin.carousel.show')->with([
-    
-               'carousels' => $carousels,
-               'id' => $id,
-               
-               
-              
-               
-           ]); }
-   
-          
-          
+        if ($carousels = carousel::find($id)) {
+
+            return View::make('Admin.carousel.show')->with([
+
+                'carousels' => $carousels,
+                'id' => $id,
+
+            ]);}
+
     }
 
     /**
@@ -135,11 +117,10 @@ class CarouselController extends Controller
     {
         $carousels = carousel::find($id);
         return view('Admin.carousel.edit')->with([
- 
+
             'carousels' => $carousels,
             'id' => $id,
-        
-            
+
         ]);
     }
 
@@ -153,47 +134,37 @@ class CarouselController extends Controller
     public function update(Request $request, carousel $carousels, $id)
     {
         $request->validate([
-            'title'=>'required',
-            
+            'title' => 'required',
+
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
             'image' => 'mimes:jpeg,png|max:1024',
         ]);
 
-
         $carousels = carousel::find($id);
-        $carousels->title =  $request->get('title');
+        $carousels->title = $request->get('title');
         $carousels->position = $request->get('position');
         $carousels->classic = $request->get('classic');
 
-        
-        if($request->hasFile('image'))
-        {
-        if($request->file('image')->isValid())
-        {
-        $extension = $request->image->extension();
-        
-        
-       
-        $request->image->storeAs('/public/carousel', $validated['title']. ".".$extension);
-        
-        $definedpath = ('carousel/');
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+                $extension = $request->image->extension();
 
-        $url = Storage::url( $definedpath. $validated['title'].".".$extension);
+                $request->image->storeAs('/public/carousel', $validated['title'] . "." . $extension);
 
-         $carousels->cover = $url;
-        }}
+                $definedpath = ('carousel/');
 
+                $url = Storage::url($definedpath . $validated['title'] . "." . $extension);
 
-       if( $carousels->save())
-        {
-            $request->session()->flash('success', $carousels->title .'has been updated.');
-            return redirect()->route('admin.carousel.index')->with('success', $carousels->title .' has been updated!');
-        }
-        else
-        {
-            $request->session()->flash('erorr', $carousels->title .'has been not updated due to technical error.');
+                $carousels->cover = $url;
+            }}
+
+        if ($carousels->save()) {
+            $request->session()->flash('success', $carousels->title . 'has been updated.');
+            return redirect()->route('admin.carousel.index')->with('success', $carousels->title . ' has been updated!');
+        } else {
+            $request->session()->flash('erorr', $carousels->title . 'has been not updated due to technical error.');
             return redirect()->route('admin.carousel.index')->with('error', 'There was an error during update!');
         }
     }
@@ -209,6 +180,6 @@ class CarouselController extends Controller
         $carousels = carousel::find($id);
         $carousels->delete();
 
-        return redirect()->route('admin.carousel.index')->with('success', $carousels->title .' has been deleted!');
+        return redirect()->route('admin.carousel.index')->with('success', $carousels->title . ' has been deleted!');
     }
 }

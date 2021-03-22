@@ -2,5 +2,5 @@
 
 @section('content')
 
-                        @include('Admin.comic.create')
+    @include('Admin.comic.create')
 @endsection

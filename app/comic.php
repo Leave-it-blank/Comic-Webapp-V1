@@ -1,10 +1,12 @@
 <?php
 
 namespace App;
-
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Illuminate\Database\Eloquent\Model;
 use DB;
 use App\url;
+use Spatie\Sitemap\Contracts\Sitemapable;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 class comic extends Model
@@ -33,6 +35,7 @@ class comic extends Model
 	 *
 	 * @return array
 	 */
+	
 	public function sluggable()
 	{
 		
@@ -48,7 +51,14 @@ class comic extends Model
 
 	public function chapters()
 	{
-		return $this->hasMany(Chapter::class, 'comic_id');
+		return $this->hasMany( \App\chapter::class, 'comic_id');
+	}
+
+	public function chapter_number($comic)
+	{
+		return  implode(\App\chapter::where('comic_id', $comic->id)->latest()->limit(1)->pluck('number')->toArray());
+	
+
 	}
 
 	public function comicView()
@@ -56,19 +66,19 @@ class comic extends Model
         return $this->hasMany(ComicView::class);
     }
 
-
-	public function showcomic()
+public function getTotalPageAttribute()
 {
-    if(auth()->id()==null){
-        return $this->postView()
-        ->where('ip', '=',  request()->ip())->exists();
+	$comics = $this->comic;
+
+	return $comics->id;
+}
+
+
+public function toSitemapTag(): Url
+    {
+        return route('blog.post.show', $this);
     }
 
-    return $this->postView()
-    ->where(function($postViewsQuery) { $postViewsQuery
-        ->where('session_id', '=', request()->getSession()->getId())
-        ->orWhere('user_id', '=', (auth()->check()));})->exists();  
-}
 
 
 	/*

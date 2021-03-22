@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\Reader;
 
-use App\Http\Controllers\Controller;
 use App\chapter;
-use Illuminate\Http\Request;
-
 use App\comic;
-use App\settings;
-use App\carousel;
+use App\Http\Controllers\Controller;
 use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
-
-
+use Artesaos\SEOTools\Facades\OpenGraph;
 class ChapterController extends Controller
 {
     /**
@@ -56,61 +51,61 @@ class ChapterController extends Controller
      */
     public function show(comic $comic, $id, $slug, $number)
     {
-        $settings =  DB::table('settings')->where('id', '1')->first();
+        $settings = DB::table('settings')->where('id', '1')->first();
 
-        if( $comics = Comic::find($id ))
+        if ($comics = Comic::find($id)) {
 
-      {
-            $chapters =  Chapter::where( 'comic_id', $id)->where( 'number', $number)->get();
 
-            $chapter_view = DB::table('chapters')->where( 'comic_id', $id)->where( 'number', $number);
+           
+
+            $chapters = Chapter::where('comic_id', $id)->where('number', $number)->get();
+
+            $chapter_view = DB::table('chapters')->where('comic_id', $id)->where('number', $number);
 
             $chapter_view->increment('view_count');
-           
-            $comics->increment('view_count');
-           
+
             
-          
-          
-        
+            OpenGraph::setDescription($comics->desc);
+            OpenGraph::setTitle($comics->title);
+            OpenGraph::addProperty('determiner', 'Manga'); 
+            OpenGraph::addProperty('image' , $settings->site_url . $comics->cover);
+            OpenGraph::addProperty('chapter_number' , $number);
+            OpenGraph::addProperty('comic_id' , $id);
+          // get previous user id
+             $previous = Chapter::where('comic_id', $id)->where('number', '<', $number)->max('number');
+
+          // get next user id
+           $next = Chapter::where('comic_id', $id)->where('number', '>', $number)->min('number');
+
+            $comics->increment('view_count');
+
             return View::make('series.chapter.comic_page')->with([
-   
+
                 'comics' => $comics,
-     
+
                 'id' => $id,
-    
+
                 'si' => $slug,
-          
+
                 'chapters' => $chapters,
 
                 'comics' => $comics,
-   
-                'settings' => $settings
- 
-             
-            
-             
-       
-             ]);
 
-         }
-       
-    
-            else
-            
-             {
- 
-           
-                return redirect()->route('reader.comics.index');
-  
-          
-    
-            }
-           
-     
+                'settings' => $settings,
+
+                'previous' =>  $previous,
+
+                'next' => $next,
 
 
 
+            ]);
+
+        } else {
+
+            return redirect()->route('reader.comics.index');
+
+        }
 
     }
 

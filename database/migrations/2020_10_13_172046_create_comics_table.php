@@ -16,11 +16,11 @@ class CreateComicsTable extends Migration
 		
 
 		Schema::create('comics', function(Blueprint $table){
-			$table->bigIncrements('id');
+			$table->bigIncrements('id')->unique();
 			$table->bigInteger('user_id')->unsigned()->nullable();
 			$table->string('title', 200)->nullable();
 			$table->string('cover', 255) ->nullable();
-			$table->integer('views')->unsigned()->default(0);
+			$table->integer('item_type')->unsigned()->default(0); //0 for comics and 1 for novels?
 			$table->text('meta')->nullable();
 			$table->text('slug')->nullable();
 			$table->text('desc')->nullable();

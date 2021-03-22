@@ -1,3 +1,5 @@
+
+
 module.exports = {
   future: {
     // removeDeprecatedGapUtilities: true,
@@ -9,8 +11,7 @@ module.exports = {
   theme: {
 
 
-
-   
+  
 
 
 

@@ -1,0 +1,19 @@
+  <script>var mini = true;
+
+        function toggleSidebar() {
+          if (mini) {
+          //  console.log("opening sidebar");
+            document.getElementById("mySidebar").style.width = "250px";
+           // document.getElementById("main_page_side").style.marginLeft = "250px";       -> moves the screen //will cause too much movement on site.
+           //   document.getElementById("nav_main_page_bar").style.marginLeft = "250px";  -> moves the screen //will cause too much movement on site.
+            this.mini = false;
+          } else {
+         //   console.log("closing sidebar");
+            document.getElementById("mySidebar").style.width = "80px";
+           // document.getElementById("main_page_side").style.marginLeft = "85px";   -> moves the screen //will cause too much movement on site.
+         //   document.getElementById("nav_main_page_bar").style.marginLeft = "85px";  -> moves the screen //will cause too much movement on site.
+            this.mini = true;
+          }
+        }
+        
+         </script>

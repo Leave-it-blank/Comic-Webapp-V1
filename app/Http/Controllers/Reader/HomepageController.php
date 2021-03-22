@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Reader;
 
-use App\Http\Controllers\Controller;
-use App\page_view;
-use Illuminate\Http\Request;
-use DB;
-use View;
-use App\comic;
 use App\carousel;
 use App\chapter;
-
-
+use App\comic;
+use App\Http\Controllers\Controller;
+use App\page_view;
+use DB;
+use Illuminate\Http\Request;
+use View;
 
 class HomepageController extends Controller
 {
@@ -22,27 +20,18 @@ class HomepageController extends Controller
      */
     public function index()
     {
-        $carousels = carousel::all();
-        $comics = Comic::all();
-        $chapters = Chapter::orderBy('id', 'desc')->limit(8)->get();
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        $features =  DB::table('features')->where('id', '1')->first();
-        
-        
-        return view('Home')->with([
- 
-            'comics' => $comics,
-            
-            'carousels' => $carousels,
-            
-            'chapters' => $chapters,
+     
+   
+        $comics = Comic::orderBy('id', 'desc')->limit(6)->get();
+        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
 
-            'settings' => $settings,
-            'features' => $features
-           
-           
-            
-        ]); 
+
+       
+        return View::make('Home')
+            ->with('comics', $comics)
+            ->with( 'chapters', $chapters);
+
+        
     }
     /**
      * Show the form for creating a new resource.
@@ -51,7 +40,7 @@ class HomepageController extends Controller
      */
     public function create()
     {
-        //
+        //mostviewed
     }
 
     /**
@@ -74,7 +63,6 @@ class HomepageController extends Controller
     public function show(page_view $page_view, comic $comics, $id)
     {
 
-        
     }
 
     /**
@@ -109,5 +97,82 @@ class HomepageController extends Controller
     public function destroy(page_view $page_view)
     {
         //
+    }
+
+
+    public function search (Request $request){
+        // Get the search value from the request
+        $search = $request->input('search');
+    
+        // Search in the title and body columns from the posts table
+        $comics = Comic::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('author', 'LIKE', "%{$search}%")
+            ->orWhere('artist', 'LIKE', "%{$search}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+         
+        
+   
+
+            return view('series.search', compact('comics'));
+        
+    }
+
+    public function mostviewed(){
+
+        $comics = Comic::orderBy('view_count', 'desc')->limit(6)->get();
+
+
+        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+        return View::make('Home')
+          ->with('comics', $comics)
+          ->with( 'chapters', $chapters);
+         
+
+
+    }
+
+    public function mostpopular(){
+
+
+        $comics = Comic::orderBy('id', 'desc')->limit(6)->get();
+        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+
+
+       
+        return View::make('Home')
+            ->with('comics', $comics)  
+            ->with( 'chapters', $chapters) ;
+
+
+    }
+
+    public function mostrandom(){
+
+
+        $noofch = Comic::all()->count();
+        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+       
+     if($noofch >6){
+        $comics = Comic::all()->random(6);
+     
+     }
+     else {
+        $comics = Comic::all()->random(1);
+       
+     }
+   
+
+       
+        return View::make('Home')
+            ->with('comics', $comics)    
+            ->with( 'chapters', $chapters);     
+           
+            
+         
+
+
     }
 }

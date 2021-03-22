@@ -1,78 +1,23 @@
 
-  <!--
+<script>
+    addEventListener("load",() => { // "load" is safe but "DOMContentLoaded" starts earlier
+        var index = 0;
+        const slides = document.querySelectorAll(".lib-slides");
+        const classHide = "lib-hidden", count = slides.length;
+        nextSlide();
+        function nextSlide() {
+            slides[(index ++) % count].classList.add(classHide);
+            slides[index % count].classList.remove(classHide);
+            setTimeout(nextSlide, 9000);
+        }
+    });
+</script>
 
-  <div class="carousel relative shadow-2xl {{$features->class}}">
-    <div class="carousel-inner relative overflow-hidden w-auto">
-      <!--Slides--
-      @foreach ($carousels as $carousel)
-        <input class="carousel-open" type="radio" id="carousel-{{$carousel->id}}" name="carousel" aria-hidden="true" hidden="" checked="checked">
-        <div class="carousel-item absolute opacity-0" >
-            <div class="block h-auto w-auto  text-white text-5xl text-center" href="{{ $carousel->classic }}" ><img class="w-full h-full"  src="{{ $carousel->cover }}" /></div>
-        </div>
-        <label for="carousel-3" class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-        <label for="carousel-2" class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
-        
-        <label for="carousel-1" class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-        <label for="carousel-3" class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label> 
-        
+<div class="flex justify-center m-2 md:m-5 md:pl-12">
 
-        <label for="carousel-2" class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-        <label for="carousel-1" class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
-
-        
-          @endforeach
-   
-       
-        <!-- Add additional indicators for each slide
-        
-         <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden="">
-        <div class="carousel-item absolute opacity-0" style="height:50vh;">
-            <div class="block h-full w-full bg-orange-500 text-white text-5xl text-center">Slide 2</div>
-        </div>
-        <label for="carousel-1" class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
-        <label for="carousel-3" class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden text-3xl font-bold text-black hover:text-white rounded-full bg-white hover:bg-blue-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label> 
-        --
-
-        
-        <ol class="carousel-indicators">
-            <li class="inline-block mr-3">
-                <label for="carousel-1" class="carousel-bullet cursor-pointer block text-2xl text-white hover:text-blue-700">•</label>
-            </li>
-            <li class="inline-block mr-3">
-                <label for="carousel-2" class="carousel-bullet cursor-pointer block text-2xl text-white hover:text-blue-700">•</label>
-            </li>
-            <li class="inline-block mr-3">
-                <label for="carousel-3" class="carousel-bullet cursor-pointer block text-2xl text-white hover:text-blue-700">•</label>
-            </li>
-       
-        </ol> 
-        
-    </div>
-</div> -->
-
-<!-- Slideshow container -->
-<div class="slideshow-container   md:mt-8">
-    @foreach ($carousels as $carousel)
-    <!-- Full-width images with number and caption text -->
-    <div class="mySlides fade">
-    
-      <img class="w-full h-full " src="{{ $carousel->cover }}">
-  
-    </div>
-    @endforeach
-    <!-- The dots/circles -->
-  <div style="text-align:center">
-    <span class="dot " onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-    <span class="dot" onclick="currentSlide(4)"></span>
-    <span class="dot" onclick="currentSlide(5)"></span>
-  </div>
-  
-    <!-- Next and previous buttons -->
-    <a class="prev"  onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
-  </div>
-  <br>
-  
- 
+    <img class="lib-slides  lib-hidden" src="storage/carousel/01">
+    <img class="lib-slides  lib-hidden" src="storage/carousel/02">
+    <img class="lib-slides  lib-hidden" src="storage/carousel/03">
+    <img class="lib-slides  lib-hidden" src="storage/carousel/04">
+    <img class="lib-slides  lib-hidden" src="storage/carousel/05">
+</div>

@@ -2,25 +2,25 @@
 
 @section('content')
 
-<div class="container" >
-    <div class="row justify-content-center">
-          <!-- bead come don't touch yet -->
-        
-
-        <div class="col-md-8">
-     
-            <div class="card" style="background-color: transparent;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- bead come don't touch yet -->
 
 
-                <div class="card-body">
-         
+            <div class="col-md-8">
 
-                    {{ __('You are logged in!') }}
+                <div class="card" style="background-color: transparent;">
+
+
+                    <div class="card-body">
+
+
+                        {{ __('You are logged in!') }}
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
-    
-</div>
 
 @endsection

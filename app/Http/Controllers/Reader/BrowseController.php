@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Reader;
-
+use Spatie\Searchable\Search;
+use App\comic;
 use App\Http\Controllers\Controller;
 use App\page_view;
-use Illuminate\Http\Request;
 use DB;
+use Illuminate\Http\Request;
 use view;
-use App\comic;
+use chapter;
 
 class BrowseController extends Controller
 {
@@ -17,19 +18,20 @@ class BrowseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
 
-    {      
-        
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        $features =  DB::table('features')->where('id', '1')->first();
-        $comics = Comic::all();
+        $settings = DB::table('settings')->where('id', '1')->first();
+        $features = DB::table('features')->where('id', '1')->first();
+        $comics = Comic::where('item_type',  0)->paginate(10);
+
+    
+
         return view('Comics')->with([
-            
-            
+
             'comics' => $comics,
-        
+
             'settings' => $settings,
-            'features' => $features
+            'features' => $features,
         ]);
     }
 
@@ -98,4 +100,7 @@ class BrowseController extends Controller
     {
         //
     }
+
+ 
+
 }

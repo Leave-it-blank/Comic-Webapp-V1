@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\chapter;
-use Illuminate\Http\Request;
 use App\comic;
-use DB;
-use View;
+use App\Http\Controllers\Controller;
 use App\url;
-use Illuminate\Support\Facades\Storage;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Facades\Storage;
+use View;
 
 class ChapterController extends Controller
 {
@@ -29,24 +28,20 @@ class ChapterController extends Controller
 
     public function index($id)
     {
-        $comics = Comic::find($id );
+        $comics = Comic::find($id);
 
-       
-        $chapters =  Chapter::where( 'comic_id', $id)->get();
-        
+        $chapters = Chapter::where('comic_id', $id)->get();
+
         return view('Admin.comic.chapter.index')->with([
- 
-            'comics' => $comics,
-          
-           'id' => $id,
-        
-           'chapters' => $chapters,
 
-            
-           
-            
+            'comics' => $comics,
+
+            'id' => $id,
+
+            'chapters' => $chapters,
+
         ]);
-     
+
     }
 
     /**
@@ -58,19 +53,15 @@ class ChapterController extends Controller
     {
         $comics = Comic::find($id);
         return view('Admin.comic.chapter.create')->with([
- 
-            'comics' => $comics,
-          
-           'id' => $comics->id,
-        
-           'slug' => $comics->slug,
 
-            
-           
-            
+            'comics' => $comics,
+
+            'id' => $comics->id,
+
+            'slug' => $comics->slug,
+
         ]);
 
-        
     }
 
     /**
@@ -79,66 +70,52 @@ class ChapterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, chapter $chapters, comic $comics, $id )
+    public function store(Request $request, chapter $chapters, comic $comics, $id)
     {
 
-
-        
-        
         $comics = Comic::find($comics->id);
 
-  
         $validated = $request->validate([
-          
-          'name' => 'string|max:40',
-          'number' => 'integer',
-          'volume' => 'string|max:40',
-     
+
+            'name' => 'string|max:40',
+            'number' => 'integer',
+            'volume' => 'string|max:40',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg'
+            
         ]);
-        
-        
-        
-        if($request->hasFile('image'))
-        {
-         $names = [];
-             foreach($request->file('image') as $image)
-        {
-              $destinationPath = 'storage/comics/'. $id. '/'. $request->get('volume'). '/' .$request->get('number');
-              $filename = $image->getClientOriginalName();
-              $image->move($destinationPath, $filename);
-              array_push($names, $filename);          
 
-         }
-          
-      
+        if ($request->hasFile('image')) {
+            //  Let's do everything here  
+            $names = [];
+            foreach ($request->file('image') as $image) {
 
-        $chapter = new Chapter([
-            'name' => $request->get('name'),           
-            'number' => $request->get('number'),
-            'volume' => $request->get('volume'),
-            'comic_id' => $id,
-            'cover' => json_encode($names),
-            'url' => $destinationPath. '/',
-              
-           
-        ]); 
-        
-   
-      
+                $image->isValid();
+                $destinationPath = 'storage/comics/' . $id . '/' . $request->get('volume') . '/' . $request->get('number');
+                $filename = $image->getClientOriginalName();
+                $image->move($destinationPath, $filename);
+                array_push($names, $filename);
 
+            } 
 
-         if( $chapter->save())
-           {
-             $request->session()->flash('success', $chapter->number.'  has been created.');
-             return redirect()->back();
-           }   }
-         else
-           {
-              $request->session()->flash('error', 'Chapter has been not created! Error can be due to images missing or empty. ');
-              return redirect()->back();
-            }
-       
-}
+            $chapter = new Chapter([
+                'name' => $request->get('name'),
+                'number' => $request->get('number'),
+                'volume' => $request->get('volume'),
+                'comic_id' => $id,
+                'cover' => json_encode($names),
+                'url' => $destinationPath . '/',
+
+            ]); 
+
+            if ($chapter->save()) {
+                $request->session()->flash('success', $chapter->number . '  has been created.');
+                return redirect()->back();
+            }} else {
+            $request->session()->flash('error', 'Chapter has been not created! Error can be due to images missing or empty. ');
+            return redirect()->back();
+        }
+
+    }
 
     /**
      * Display the specified resource.
@@ -160,17 +137,17 @@ class ChapterController extends Controller
     public function edit($id, $number)
     {
 
-          $comics = comic::find($id);
-          $chapter = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+        $comics = comic::find($id);
+        $chapter = Chapter::where('comic_id', $id)->where('number', $number)->first();
 
-          return view('Admin.comic.chapter.edit')->with([
- 
+        return view('Admin.comic.chapter.edit')->with([
+
             'comics' => $comics,
             'id' => $id,
             'cid' => $chapter->id,
             'number' => $chapter->number,
-            'chapter' => $chapter
-            
+            'chapter' => $chapter,
+
         ]);
     }
 
@@ -184,137 +161,107 @@ class ChapterController extends Controller
     public function update(Request $request, $id, $number)
     {
 
+        $chapter_update_id = Chapter::where('comic_id', $id)->where('number', $number)->first();
+        $request->validate([
+            'name' => 'required',
+            'number' => 'required',
+            'volume' => 'required',
+            'image.*' => 'mimes:jpeg,png,jpg,gif,svg'
+        ]);
+        $cid = $chapter_update_id->id;
 
-     
-      
-   
+        if ($chapter_update = chapter::find($cid)) {
 
-      $chapter_update_id = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
-       $request->validate([
-        'name'=>'required',
-        'number'=>'required',
-        'volume'=>'required',
-           ]);
-          $cid = $chapter_update_id->id;
+            $chapter_update->name = $request->get('name');
+            $chapter_update->number = $request->get('number');
+            $chapter_update->volume = $request->get('volume');
 
-         if( $chapter_update = chapter::find($cid))
-         {
+            if ($request->hasFile('image')) {
 
+                $chapter_delete_old = Chapter::where('comic_id', $id)->where('number', $number)->first();
 
-      
+                foreach (json_decode($chapter_delete_old->cover) as $page) {
+                    if (\File::exists(public_path($chapter_delete_old->url . ($page)))) {
 
-          $chapter_update->name =  $request->get('name');
-          $chapter_update->number = $request->get('number');
-          $chapter_update->volume = $request->get('volume');
+                        \File::delete(public_path($chapter_delete_old->url . ($page)));
 
-          if($request->hasFile('image'))
-          {
+                    }
 
-            $chapter_delete_old = Chapter::where( 'comic_id', $id)->where( 'number', $number)->first();
+                }
 
-            foreach (json_decode($chapter_delete_old->cover) as $page)
+                $names = [];
+                foreach ($request->file('image') as $image) {
+                    $destinationPath = 'storage/comics/' . $id . '/' . $request->get('volume') . '/' . $request->get('number');
+                    $filename = $image->getClientOriginalName();
+                    $image->move($destinationPath, $filename);
+                    array_push($names, $filename);
 
-            {
-                if(\File::exists(public_path($chapter_delete_old->url.($page)))){
-  
-  
-                 \File::delete(public_path($chapter_delete_old->url.($page)));
-        
-               }
-  
+                }
+
+                $chapter_update->cover = json_encode($names);
+                $chapter_update->url = $destinationPath . '/';
+
             }
 
-           $names = [];
-               foreach($request->file('image') as $image)
-          {
-                $destinationPath = 'storage/comics/'. $id. '/'. $request->get('volume'). '/' .$request->get('number');
-                $filename = $image->getClientOriginalName();
-                $image->move($destinationPath, $filename);
-                array_push($names, $filename);          
-  
-           }
-
-           $chapter_update->cover =  json_encode($names);
-           $chapter_update->url =    $destinationPath. '/';
-
-         }
-
-        
-      
         }
 
-        if(  $chapter_update->save())
-        {
+        if ($chapter_update->save()) {
 
-          $comics = comic::find($id);
-          $chapters =  Chapter::where( 'comic_id', $id)->get();
-          $request->session()->flash('success', 'Chapter '.$cid.' has been updated.');
-          return view('Admin.comic.chapter.index')->with([
- 
-            'comics' => $comics,
-          
-           'id' => $id,
-        
-           'chapters' => $chapters,
+            $comics = comic::find($id);
+            $chapters = Chapter::where('comic_id', $id)->get();
+            $request->session()->flash('success', 'Chapter ' . $cid . ' has been updated.');
+            return view('Admin.comic.chapter.index')->with([
 
-            
-           
-            
-        ]);
-      }
-      else
-      {
-          $request->session()->flash('erorr', $cid .'has been not updated due to technical error.');
-          return redirect()->back();
-      }
+                'comics' => $comics,
+
+                'id' => $id,
+
+                'chapters' => $chapters,
+
+            ]);
+        } else {
+            $request->session()->flash('erorr', $cid . 'has been not updated due to technical error.');
+            return redirect()->back();
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * 
-     * 
-     *    
-     *  
+     *
+     *
+     *
+     *
      * @param  \App\chapter  $chapter
      * @return \Illuminate\Http\Response
      */
-    public function destroy( comic $comics, $id)
+    public function destroy(comic $comics, $id)
     {
-        
-     # @foreach (json_decode($chapter->cover) as $page)
-     # <img src="/{{$chapter->url}}{{($page)}}" class="block ">
-     #   @endforeach
-      
-           
-         $chapter = DB::table('chapters')->where('id', $id)->first();
-      
-   
-           foreach (json_decode($chapter->cover) as $page)
-     
-             {
-              if(\File::exists(public_path($chapter->url.($page)))){
 
+        # @foreach (json_decode($chapter->cover) as $page)
+        # <img src="/{{$chapter->url}}{{($page)}}" class="block ">
+        #   @endforeach
 
-                 \File::delete(public_path($chapter->url.($page)));
-             
-                }
+        $chapter = DB::table('chapters')->where('id', $id)->first();
 
-             }
-             $chapter_delete = DB::table('chapters')->where('id', $id); #why twice?? because you can't use save() or delete() after you call ->first()
-    
-        if($chapter_delete->delete())
-        {
-         
-          return redirect()->back()->with('success', 'Chapter has been deleted.');
+        foreach (json_decode($chapter->cover) as $page) {
+            if (\File::exists(public_path($chapter->url . ($page)))) {
+
+                \File::delete(public_path($chapter->url . ($page)));
+
+            }
+
         }
-      else
-        {
-          
-           return redirect()->back()->with('erorr', 'Chapter has been not deleted due to technical error.');
-         }
-      
+        $chapter_delete = DB::table('chapters')->where('id', $id); #why twice?? because you can't use save() or delete() after you call ->first()
+
+        if ($chapter_delete->delete()) {
+
+            return redirect()->back()->with('success', 'Chapter has been deleted.');
+        } else {
+
+            return redirect()->back()->with('erorr', 'Chapter has been not deleted due to technical error.');
+        }
+
     }
 
- 
 }

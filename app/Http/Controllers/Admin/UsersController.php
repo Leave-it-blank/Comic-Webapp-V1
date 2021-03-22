@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use DB;
+
 use App\Http\Controllers\Controller;
 use App\User;
+use DB;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+
 
 class UsersController extends Controller
 {
@@ -23,16 +26,13 @@ class UsersController extends Controller
 
     public function index()
     {
-       
+
         $users = DB::table('users')->paginate(10);
-		
+
         $Users = User::all();
-     
-    
-    
+
         return view('Admin.users')->with('users', $Users);
     }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -61,9 +61,9 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show()
     {
-        //
+   
     }
 
     /**
@@ -77,9 +77,9 @@ class UsersController extends Controller
         $roles = Role::all();
 
         return view('Admin.users.edit')->with([
- 
+
             'user' => $user,
-            'roles' => $roles
+            'roles' => $roles,
 
         ]);
     }
@@ -97,9 +97,8 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->country = $request->country;
-        if( $user->save())
-        {
-            $request->session()->flash('success', $user->name .'has been updated.');
+        if ($user->save()) {
+            $request->session()->flash('success', $user->name . 'has been updated.');
 
         }
 
@@ -114,9 +113,34 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        $user ->roles() ->detach();
-        $user ->delete();
+        $user->roles()->detach();
+        $user->delete();
 
         return redirect()->route('admin.users.index');
     }
+    
+  
+
+    public function search (Request $request) {
+        // Get the search value from the request
+        $search = $request->input('search');
+    
+        // Search in the title and body columns from the posts table
+        $users = User::query()
+            ->where('name', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->get();
+    
+        // Return the search view with the resluts compacted
+         
+        
+   
+
+            return view('Admin.users', compact('users'));
+        
+    }
+
+
+
 }

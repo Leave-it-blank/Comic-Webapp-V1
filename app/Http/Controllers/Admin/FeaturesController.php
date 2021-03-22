@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DB;
-use Feature;
 
+use App\Http\Controllers\Controller;
+use Feature;
+use Illuminate\Http\Request;
 
 class FeaturesController extends Controller
 {
@@ -22,9 +21,9 @@ class FeaturesController extends Controller
 
     /**
      * Show the application Features.
-    
-   *    @return \Illuminate\Contracts\Support\Renderable
-    */
+
+     *    @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
         return view('Admin.features');
@@ -34,7 +33,7 @@ class FeaturesController extends Controller
         $carousel = Features::all();
         $carousel->status = $request->status;
         $carousel->save();
-  
-        return response()->json(['success'=>'Status change successfully.']);
+
+        return response()->json(['success' => 'Status change successfully.']);
     }
 }

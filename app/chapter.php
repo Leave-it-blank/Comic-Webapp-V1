@@ -54,29 +54,10 @@ class chapter extends Model
        return $this->belongsTo( \App\comic::class , 'comic_id');
 	}
 
-	public function deletechapter()
-	{
-
-
-		$chapters = ChapterDB::select('select * from chapters where id = ?', $id);
-
-		
-	}
-
-
-
-
-
-
-
 
 
 
 /*
-
-
-
-
 
 	public function comic()
 	{
@@ -107,10 +88,7 @@ class chapter extends Model
 		return $this->hasMany(Page::class);
 	}
 
-	public function getPageAttribute()
-	{
-		return $this->pages()->count();
-	}
+	
 
 	public function getReleaseDateAttribute()
 	{

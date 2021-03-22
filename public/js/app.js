@@ -11035,6 +11035,8 @@ __webpack_require__(/*! ./jquery.dataTables */ "./resources/js/jquery.dataTables
 __webpack_require__(/*! ./index */ "./resources/js/index.js");
 
 __webpack_require__(/*! ./carousel */ "./resources/js/carousel.js");
+
+__webpack_require__(/*! ./sidebar_mainpage */ "./resources/js/sidebar_mainpage.js");
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -34726,6 +34728,17 @@ var menudrop2 = document.querySelector('#menudrop');
 dropnav2.addEventListener('click', function (e) {
   menudrop2.classList.add('hidden');
 });
+
+/***/ }),
+
+/***/ "./resources/js/sidebar_mainpage.js":
+/*!******************************************!*\
+  !*** ./resources/js/sidebar_mainpage.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 

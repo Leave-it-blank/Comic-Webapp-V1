@@ -133,3 +133,175 @@
     padding: 5px;
     opacity: 80%;
   }
+
+  /* side bar hover to expand one*/
+
+
+  .sidebar {
+    height: 100%;
+    width: 80px;
+    position: fixed;
+    z-index: 1;
+    padding-left: 0px;
+    top: 0;
+    left: 0;
+    background-color: rgb(34, 33, 33);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 25px;
+    white-space: nowrap;
+
+}
+
+.sidebar a {
+    padding: 8px 8px 4px 32px;
+    text-decoration: none;
+  
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.material-icons,
+.icon-text {
+    vertical-align: middle;
+}
+
+.material-icons {
+    padding-bottom: 3px;
+}
+
+.main_page_side {
+    transition: margin-left .5s;
+    padding: 16px;
+    margin-left: 100px;
+}
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+
+/*@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    .sidebar a {
+        font-size: 18px;
+    }
+} */
+
+@media screen and (max-width: 767px) {
+
+
+  .sidebar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 767px) {
+     #nav_main_page_bar {
+
+      margin-Left: 85px;
+      }
+}
+
+@media screen and (min-width:767px){
+
+  #page_comics_chapter {
+
+    min-width: 720px;
+  }
+}
+
+#main_side_bar_name {
+
+padding-top: 10px;
+
+}
+
+.sidebar:hover{
+  width: 250px;
+
+
+}
+
+.sidebar:hover #main_sidebar_block_2 {
+
+  display: block;
+}
+
+#main_sidebar_block_2 {
+
+  display: none;
+}
+.sidebar:hover #main_sidebar_block_1 {
+
+  display: none;
+}
+
+/* search bar*/
+
+#search_bar_lib {
+
+  background-color: rgb(219, 219, 219);
+  
+  
+
+}
+
+
+/* Style the links inside the sidenav */
+#mysidepopup_main a {
+  position:absolute  ; /* Position them relative to the browser window */
+  right: -180px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding-left: 18px; /* 15px padding */
+  padding: 14px;
+
+  width: 200px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 16px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mysidepopup_main a:hover {
+  right: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+
+
+#discord_popups_main {
+  bottom: 80px;
+  background-color: #2196F3; /* Blue */
+}
+
+#patreon_popups_main {
+  bottom: 140px;
+  background-color: #f44336; /* Red */
+}
+
+.color-base-main {
+  background: rgb(37, 37, 37);
+
+}
+ /*carousel thing */
+.lib-hidden { display : none; }
+
+.lib-slides {
+  width: 100%;
+  
+  max-height: 450px;
+  max-width: 1140px;
+ 
+ }

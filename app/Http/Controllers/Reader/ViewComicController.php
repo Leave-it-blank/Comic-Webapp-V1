@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Reader;
 
-use App\Http\Controllers\Controller;
-use App\comic;
-use Illuminate\Http\Request;
-use App\carousel;
-use DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
 use App\chapter;
-use App\settings;
-
+use App\comic;
+use App\Http\Controllers\Controller;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
+use Artesaos\SEOTools\Facades\OpenGraph;
 
 class ViewComicController extends Controller
 {
@@ -21,13 +18,12 @@ class ViewComicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( )
+    public function index()
     {
         $comics = Comic::find($comics->id);
-        
 
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        
+        $settings = DB::table('settings')->where('id', '1')->first();
+
         return view('series.comic_info_test')->with(['comics' => $comics, 'settings' => $settings]);
     }
 
@@ -61,52 +57,40 @@ class ViewComicController extends Controller
     public function show(comic $comic, $id, $slug)
     {
 
-        $settings =  DB::table('settings')->where('id', '1')->first();
-        $features =  DB::table('features')->where('id', '1')->first();
-        
+        $settings = DB::table('settings')->where('id', '1')->first();
+        $features = DB::table('features')->where('id', '1')->first();
 
-        if( $comics = Comic::find($id ))
+        if ($comics = Comic::find($id)) {
+            $comics->increment('view_count');
+            OpenGraph::setDescription($comics->desc);
+            OpenGraph::setTitle($comics->title);
+            OpenGraph::addProperty('determiner', 'Manga'); 
+            OpenGraph::addProperty('image' , $settings->site_url . $comics->cover);
 
-       {
-        $comics->increment('view_count');
-         
-        $chapters =  Chapter::where( 'comic_id', $id)->get();
-      
-        
-        return View::make('series.comic_info')->with([
- 
-            'comics' => $comics,
-          
-          
-            'id' => $id,
-            'si' => $slug,
-        
-            'chapters' => $chapters,
+            $chapters = Chapter::where('comic_id', $id)->get();
 
-            'comics' => $comics,
-            'settings' => $settings,
-            'features' => $features
-           
-            
-        ]);
-     
+            return View::make('series.comic_info')->with([
+
+                'comics' => $comics,
+
+                'id' => $id,
+                'si' => $slug,
+
+                'chapters' => $chapters,
+
+                'comics' => $comics,
+                'settings' => $settings,
+                'features' => $features,
+
+            ]);
+
+        } else {
+
+            return redirect()->route('reader.comics.index');
+
         }
-      
-   
-           else
-           
-            {
 
-          
-               return redirect()->route('reader.comics.index');
- 
-         
-   
-           }
-          
-          
     }
-
 
     /**
      * Show the form for editing the specified resource.

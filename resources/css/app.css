@@ -3,7 +3,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i');
 
-
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 
 @import "css/design.css";
@@ -35,4 +35,18 @@
 
 .profile-btn{
   @apply rounded-full py-2 px-3 uppercase text-xs font-bold tracking-wider cursor-pointer;
+}
+
+.npmbutton{
+
+ @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white  mx-2;
+}
+.discord-button-join {
+
+  @apply flex justify-center  px-3 py-2 text-white  bg-blue-700 text-2xl;
+}
+
+.patreon-button-join{
+
+ @apply  m-6 flex justify-center  px-3 py-2 text-white  bg-red-700 text-2xl ;
 }

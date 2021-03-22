@@ -1,16 +1,15 @@
 <?php
 
-Namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\comic;
-use Illuminate\Http\Request;
-use DB;
-use View;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 use File;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use View;
+use Illuminate\Support\Str;
 
 class ComicsController extends Controller
 {
@@ -49,64 +48,54 @@ class ComicsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, comic $comics)
-
     {
         $request->validate([
-            'title'=>'required|string',
-            'country'=>'required',
-            
-            
+            'title' => 'required|string',
+            'country' => 'required',
+
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
             'image' => 'mimes:jpeg,png|max:4096',
-           
-            
+
         ]);
-       
+        if ($request->hasFile('image')) {
+        if ($request->file('image')->isValid()) {
 
-        
-        
-        if($request->file('image')->isValid())
-     {
+            $extension = $request->image->extension();
 
-        $extension = $request->image->extension();
-        
-        
-       
-        $request->image->storeAs('/public/image', $validated['title']. ".".$extension);
-        
-        $definedpath = ('image/');
+            $randomString = Str::random(30);
 
-        $url = Storage::url( $definedpath. $validated['title'].".".$extension);
+            $request->image->storeAs('/public/comics/cover/', $randomString . "." . $extension);
 
-        
-       
+            $definedpath = ('comics/cover/');
 
-        $comic = new Comic([
-            'title' => $request->get('title'),
-            
-            'desc' => $request->get('desc'),
-            'author' => $request->get('author'),
-            'artist' => $request->get('artist'),
-            'country' => $request->get('country'),
-            'cover' => $url,
-            
-           
-    
-           
-            
-              
-           
-        ]);
-     
-
-  
-
-        $comic->save();
-        return redirect()->route('admin.comics.index')->with('success', 'manga saved!');
-
+            $url = Storage::url($definedpath . $randomString . "." . $extension);
+        } }
+        else {
+            $url  = null;
         }
+
+            $comicidforthisnewcomic = rand(1000,20000);
+
+          
+
+            $comic = new Comic([
+               
+                'title' => $request->get('title'),
+
+                'desc' => $request->get('desc'),
+                'author' => $request->get('author'),
+                'artist' => $request->get('artist'),
+                'country' => $request->get('country'),
+                'cover' => $url,
+
+            ]);
+            $comic->id = $comicidforthisnewcomic;
+            $comic->save();
+            return redirect()->route('admin.comics.index')->with('success' , $comicidforthisnewcomic);
+
+        
 
     }
 
@@ -116,31 +105,22 @@ class ComicsController extends Controller
      * @param  \App\comic  $comic
      * @return \Illuminate\Http\Response
      */
-    public function show( comic $comics, $id)
+    public function show(comic $comics, $id)
     {
-        
-     if( $comics = Comic::find($id))
-     {
-       
-        return View::make('Admin.comic.show')->with([
- 
-            'comics' => $comics,
-            'id' => $id,
-        
-            
-           
-            
-        ]); }
 
-        else
-        {
+        if ($comics = Comic::find($id)) {
 
-            return  view('Home');
+            return View::make('Admin.comic.show')->with([
+
+                'comics' => $comics,
+                'id' => $id,
+
+            ]);} else {
+
+            return view('Home');
 
         }
-       
-    
-          
+
     }
 
     /**
@@ -151,13 +131,13 @@ class ComicsController extends Controller
      */
     public function edit($id)
     {
-        
+
         $comics = comic::find($id);
         return view('Admin.comic.edit')->with([
- 
+
             'comics' => $comics,
             'id' => $id,
-            
+
         ]);
     }
 
@@ -169,57 +149,55 @@ class ComicsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    { 
+    {
         $request->validate([
-            'title'=>'required',
-            'country'=>'required',
+            'title' => 'required',
+            'country' => 'required',
         ]);
         $validated = $request->validate([
             'title' => 'string|max:200',
             'image' => 'mimes:jpeg,png|max:4096',
         ]);
 
-
         $comic = Comic::find($id);
-        $comic->title =  $request->get('title');
+        $comic->title = $request->get('title');
         $comic->desc = $request->get('desc');
         $comic->author = $request->get('author');
         $comic->artist = $request->get('artist');
-        
-        $comic->country = $request->get('country');
-        
-        if($request->hasFile('image'))
-        {
-        if($request->file('image')->isValid())
-        {
-   
-           $extension = $request->image->extension();
-           
-           
-          
-           $request->image->storeAs('/public/image', $validated['title']. ".".$extension);
-           
-           $definedpath = ('image/');
-   
-           $url = Storage::url( $definedpath. $validated['title'].".".$extension);
 
-           $comic->cover = $url;
-           
-        }}
-       if( $comic->save())
-        {
-            $request->session()->flash('success', $comic->title .'has been updated.');
-            return redirect()->route('admin.comics.index')->with('success', $comic->title .' has been updated!');
-        }
-    
-        else
-        {
-            $request->session()->flash('erorr', $comic->title .'has been not updated due to technical error.');
+        $comic->country = $request->get('country');
+
+        if ($request->hasFile('image')) {
+            if ($request->file('image')->isValid()) {
+
+                $extension = $request->image->extension();
+
+                $comic = Comic::find($id);
+
+                if (\File::exists(public_path($comic->cover))) {
+        
+                    \File::delete(public_path($comic->cover));
+             } 
+
+                $randomString = Str::random(30);
+                $request->image->storeAs('/public/comics/cover/', $randomString . "." . $extension);
+
+                $definedpath = ('comics/cover/');
+
+                $url = Storage::url($definedpath . $randomString . "." . $extension);
+
+                $comic->cover = $url;
+
+            }}
+        if ($comic->save()) {
+            $request->session()->flash('success', $comic->title . 'has been updated.');
+            return redirect()->route('admin.comics.index')->with('success', $comic->title . ' has been updated!');
+        } else {
+            $request->session()->flash('erorr', $comic->title . 'has been not updated due to technical error.');
             return redirect()->route('admin.comics.index')->with('error', 'There was an error during update!');
         }
-       
+
     }
-    
 
     /**
      * Remove the specified resource from storage.
@@ -231,24 +209,20 @@ class ComicsController extends Controller
     {
         $comic = Comic::find($id);
 
-       
+        if (\File::exists(public_path($comic->cover))) {
 
-  
-      if(\File::exists(public_path($comic->cover))){
+            \File::delete(public_path($comic->cover));
 
-          \File::delete(public_path($comic->cover));
+            $comic->delete();
 
-          $comic->delete();
+        } else {
 
-           }else{
+            dd('Cover not found but deleted the comic.');
+            $comic->delete();
 
-             dd('File does not exists.');
+        }
 
-              }
-        
-      
-
-        return redirect()->route('admin.comics.index')->with('success', $comic->title .' has been deleted!');
+        return redirect()->route('admin.comics.index')->with('success', $comic->title . ' has been deleted!');
     }
-    
+
 }

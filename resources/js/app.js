@@ -10,6 +10,8 @@ require('./jquery');
 require('./jquery.dataTables');
 require('./index')
 require('./carousel')
+require('./sidebar_mainpage')
+
 
 
 
