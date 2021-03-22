@@ -29,9 +29,7 @@
 
 
 </head>
-<?php $settings = DB::table('settings')
-->where('id', '1')
-->first(); ?>
+
 
 <body id="page-top" class="text-xs"
     style="background-color: {{ $settings->admin_theme_name }}; color: {{ $settings->admin_text_meta }};">

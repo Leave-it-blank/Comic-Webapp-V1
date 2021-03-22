@@ -25,8 +25,6 @@ class LatestController extends Controller
 
 
 
-        $settings = DB::table('settings')->where('id', '1')->first();
-        $features = DB::table('features')->where('id', '1')->first();
 
       
         $chapters = Chapter::orderBy('id', 'desc')->paginate(10);
@@ -34,11 +32,6 @@ class LatestController extends Controller
 
        
         return view('Latest')->with([
-
-            'comics' => $comics,
-
-            'settings' => $settings,
-            'features' => $features,
 
             'chapters' => $chapters,
 

@@ -22,9 +22,9 @@ class ViewComicController extends Controller
     {
         $comics = Comic::find($comics->id);
 
-        $settings = DB::table('settings')->where('id', '1')->first();
 
-        return view('series.comic_info_test')->with(['comics' => $comics, 'settings' => $settings]);
+
+        return view('series.comic_info_test')->with('comics ' ,$comics);
     }
 
     /**
@@ -57,8 +57,7 @@ class ViewComicController extends Controller
     public function show(comic $comic, $id, $slug)
     {
 
-        $settings = DB::table('settings')->where('id', '1')->first();
-        $features = DB::table('features')->where('id', '1')->first();
+
 
         if ($comics = Comic::find($id)) {
             $comics->increment('view_count');
@@ -79,8 +78,7 @@ class ViewComicController extends Controller
                 'chapters' => $chapters,
 
                 'comics' => $comics,
-                'settings' => $settings,
-                'features' => $features,
+              
 
             ]);
 

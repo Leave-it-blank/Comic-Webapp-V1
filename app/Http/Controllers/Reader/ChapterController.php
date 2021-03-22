@@ -51,7 +51,7 @@ class ChapterController extends Controller
      */
     public function show(comic $comic, $id, $slug, $number)
     {
-        $settings = DB::table('settings')->where('id', '1')->first();
+       
 
         if ($comics = Comic::find($id)) {
 
@@ -91,7 +91,7 @@ class ChapterController extends Controller
 
                 'comics' => $comics,
 
-                'settings' => $settings,
+               
 
                 'previous' =>  $previous,
 
