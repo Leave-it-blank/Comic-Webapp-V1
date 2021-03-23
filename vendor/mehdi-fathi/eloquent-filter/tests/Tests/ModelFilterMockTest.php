@@ -5,7 +5,6 @@ namespace Tests\Tests;
 use eloquentFilter\Facade\EloquentFilter;
 use EloquentFilter\ModelFilter;
 use eloquentFilter\QueryFilter\ModelFilters\Filterable;
-use eloquentFilter\QueryFilter\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Mockery as m;
@@ -78,17 +77,6 @@ class ModelFilterMockTest extends \TestCase
 
     public function testWhere()
     {
-        // todo refactor this
-
-//        $this->__initQuery();
-//        $this->builder->shouldReceive('where')->with('username', 'mehdi');
-//        $this->builder->shouldReceive('where')->with('family', 'mehdi');
-//        $this->request->shouldReceive('query')->andReturn(['username' => 'mehdi', 'family' => 'mehdi']);
-//
-//        $this->model = new QueryFilter($this->request->query());
-//        $this->model = $this->model->apply($this->builder);
-//        $this->assertEquals($this->model, $this->builder);
-
         $builder = new EloquentBuilderTestModelCloseRelatedStub();
 
         $builder = $builder->query()
@@ -103,6 +91,24 @@ class ModelFilterMockTest extends \TestCase
         $this->assertSame($users->toSql(), $builder->toSql());
 
         $this->assertEquals(['mehdi'], $users->getBindings());
+    }
+
+    public function testWhereZero()
+    {
+        $builder = new EloquentBuilderTestModelCloseRelatedStub();
+
+        $builder = $builder->query()
+            ->where('count_posts', 0);
+
+        $this->request->shouldReceive('query')->andReturn([
+            'count_posts' => 0,
+        ]);
+
+        $users = EloquentBuilderTestModelCloseRelatedStub::filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+
+        $this->assertEquals(['0'], $users->getBindings());
     }
 
     public function testWhereSomeParamNull()
@@ -201,73 +207,53 @@ class ModelFilterMockTest extends \TestCase
         $this->assertEquals([35], $users->getBindings());
     }
 
-//
-//    public function testWhereBetween()
-//    {
-//        $this->__initQuery();
-//        $this->builder->shouldReceive('whereBetween')->with('created_at', [
-//            '2019-01-01 17:11:46',
-//            '2019-02-06 10:11:46',
-//        ]);
-//        $this->request->shouldReceive('query')->andReturn([
-//            'created_at' => [
-//                'start' => '2019-01-01 17:11:46',
-//                'end'   => '2019-02-06 10:11:46',
-//            ],
-//        ]);
-//
-//        $ModelFilters = new QueryFilter($this->request->query());
-//
-//        $users = new User();
-//        $users = $users->scopeFilter($this->builder, $this->request->query());
-//
-//        $this->assertEquals($users, $this->builder);
-//    }
+    public function testWhereByOptZero()
+    {
+        $builder = new EloquentBuilderTestModelCloseRelatedStub();
 
-//    public function testPaginate()
-//    {
-//        //todo refactor this
-    ////        $this->__initQuery();
-    ////        $this->builder->shouldReceive('whereBetween')->with('created_at', [
-    ////            '2019-01-01 17:11:46',
-    ////            '2019-02-06 10:11:46',
-    ////        ]);
-    ////        $this->builder->shouldReceive('paginate')->with(5, ['*'], 'page', 1)->andReturn([]);
-    ////
-    ////        $this->request->shouldReceive('query')->andReturn([
-    ////            'created_at' => [
-    ////                'start' => '2019-01-01 17:11:46',
-    ////                'end'   => '2019-02-06 10:11:46',
-    ////            ],
-    ////            'page' => 5,
-    ////        ]);
-    ////
-    ////        $ModelFilters = new QueryFilter($this->request->query());
-    ////        $this->model = $ModelFilters->apply($this->builder);
-    ////
-    ////        $paginate = $this->model->paginate(5, ['*'], 'page', 1);
-    ////
-    ////        $this->assertEquals($paginate, $this->builder->paginate(5, ['*'], 'page', 1));
-    ////        $this->assertEquals($this->model, $this->builder);
+        $builder = $builder->newQuery()
+            ->where('count_posts', '>', 0);
+
+        $this->request->shouldReceive('query')->andReturn([
+            'count_posts' => [
+                'operator' => '>',
+                'value'    => 0,
+            ],
+        ]);
+
+        $users = EloquentBuilderTestModelCloseRelatedStub::filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+
+        $this->assertEquals([0], $users->getBindings());
+    }
+
 //
-//
-//
-//        $builder = new EloquentBuilderTestModelCloseRelatedStub();
-//
-//        $builder = $builder->newQuery()
-//            ->where('count_posts', '>', 35)->paginate();
-//
-//        $this->request->shouldReceive('query')->andReturn([
-//            'count_posts' => [
-//                'operator' => '>',
-//                'value'    => 35,
-//            ],
-//        ]);
-//
-//        $users = EloquentBuilderTestModelCloseRelatedStub::filter($this->request->query())->paginate();
-//        dd($users);
-//
-//    }
+    public function testWhereBetween()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->whereBetween(
+            'created_at',
+            [
+                '2019-01-01 17:11:46',
+                '2019-02-06 10:11:46',
+            ]
+        );
+
+        $this->request->shouldReceive('query')->andReturn([
+            'created_at' => [
+                'start' => '2019-01-01 17:11:46',
+                'end'   => '2019-02-06 10:11:46',
+            ],
+        ]);
+
+        $users = EloquentBuilderTestModelParentStub::filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+        $this->assertEquals(['2019-01-01 17:11:46', '2019-02-06 10:11:46'], $builder->getBindings());
+        $this->assertEquals(['2019-01-01 17:11:46', '2019-02-06 10:11:46'], $users->getBindings());
+    }
 
     public function testSetWhiteList()
     {
@@ -282,6 +268,30 @@ class ModelFilterMockTest extends \TestCase
         } catch (\Exception $e) {
             $this->assertEquals(0, $e->getCode());
         }
+    }
+
+    public function testFParamOrder()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->newQuery()
+            ->orderBy('id')
+            ->orderBy('count_posts');
+
+        $this->request->shouldReceive('query')->andReturn([
+            'f_params' => [
+                'orderBy' => [
+                    'field' => 'id,count_posts',
+                    'type'  => 'ASC',
+                ],
+            ],
+        ]);
+
+        //todo ye default asc vase type order bezar
+
+        $users = EloquentBuilderTestModelParentStub::filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
     }
 
     public function testFParamException()
@@ -355,7 +365,6 @@ class ModelFilterMockTest extends \TestCase
         })->where('baz', 'joo');
 
         $this->request->shouldReceive('query')->andReturn([
-            'foo.baz.bam' => 'qux',
             'foo'         => [
                 'baz' => [
                     'bam' => 'qux',
@@ -505,6 +514,61 @@ class ModelFilterMockTest extends \TestCase
         $this->assertSame($this->request->query(), EloquentFilter::filterRequests());
     }
 
+    public function testIgnoreRequest()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->where('baz', 'joo');
+
+        $this->request->shouldReceive('query')->andReturn(
+            [
+                'baz'          => 'joo',
+                'google_index' => true,
+                'is_payment'   => true,
+            ]
+        );
+
+        $users = EloquentBuilderTestModelParentStub::ignoreRequest([
+            'google_index',
+            'is_payment',
+        ])->filter($this->request->query());
+
+        $this->assertSame([
+            'google_index',
+            'is_payment',
+        ], EloquentFilter::getIgnoredRequest());
+    }
+
+    public function testGetInjectedDetections()
+    {
+        $builder = new EloquentBuilderTestModelNewStrategyStub();
+
+        $builder = $builder->query()
+            ->whereHas('foo', function ($q) {
+                $q->where('bam', 'like', '%mehdi%');
+            })
+            ->where('baz', '<>', 'boo')
+            ->where('email', 'like', '%mehdifathi%')
+            ->where('count_posts', '=', 10)
+            ->limit(10);
+
+        $this->request->shouldReceive('query')->andReturn([
+            'baz' => [
+                'value'               => 'boo',
+                'limit'               => 10,
+                'email'               => 'mehdifathi',
+                'like_relation_value' => 'mehdi',
+            ],
+            'count_posts' => 10,
+        ]);
+
+        $users = EloquentBuilderTestModelNewStrategyStub::SetCustomDetection([WhereRelationLikeCondition::class])->filter();
+
+        $this->assertEquals([WhereRelationLikeCondition::class], EloquentFilter::getInjectedDetections());
+    }
+
+    //todo update readme me by override custom detection in service provider laravel
+
     public function testFilterRequestsIndex()
     {
         $this->request->shouldReceive('query')->andReturn(
@@ -645,7 +709,7 @@ class ModelFilterMockTest extends \TestCase
         $this->assertEquals(['qux', 'mehdi', 'boom', 'noon', 'joo'], $users->getBindings());
     }
 
-    public function testWhereBetween1()
+    public function testWhereBetweenWithEmailCountPosts()
     {
         $builder = new EloquentBuilderTestModelParentStub();
 
@@ -675,6 +739,33 @@ class ModelFilterMockTest extends \TestCase
         $this->assertSame($users->toSql(), $builder->toSql());
         $this->assertEquals(['2019-01-01 17:11:46', '2019-02-06 10:11:46', 'mehdifathi.developer@gmail.com', '35'], $builder->getBindings());
         $this->assertEquals(['2019-01-01 17:11:46', '2019-02-06 10:11:46', 'mehdifathi.developer@gmail.com', '35'], $users->getBindings());
+    }
+
+    public function testWhereBetweenWithZero()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->whereBetween(
+            'count_posts',
+            [
+                0,
+                200,
+            ]
+        )->where('email', 'mehdifathi.developer@gmail.com');
+
+        $this->request->shouldReceive('query')->andReturn([
+            'count_posts' => [
+                'start' => 0,
+                'end'   => 200,
+            ],
+            'email'       => 'mehdifathi.developer@gmail.com',
+        ]);
+
+        $users = EloquentBuilderTestModelParentStub::filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+        $this->assertEquals([0, 200, 'mehdifathi.developer@gmail.com'], $builder->getBindings());
+        $this->assertEquals([0, 200, 'mehdifathi.developer@gmail.com'], $users->getBindings());
     }
 
     public function testWhereLike1()
@@ -719,8 +810,6 @@ class ModelFilterMockTest extends \TestCase
 
         $users = EloquentBuilderTestModelNewStrategyStub::SetCustomDetection([WhereRelationLikeCondition::class])->filter();
 
-        //todo - make disable new strategy on the fly
-
         $this->assertSame($users->toSql(), $builder->toSql());
         $this->assertEquals(['%mehdi%', 'boo', '%mehdifathi%', 10], $users->getBindings());
     }
@@ -750,12 +839,103 @@ class ModelFilterMockTest extends \TestCase
 
         $users = EloquentBuilderTestModelNewStrategyStub::filter();
 
-        //todo
-        // - make disable new strategy on the fly
-        // -update readme
-
         $this->assertSame($users->toSql(), $builder->toSql());
         $this->assertEquals(['%mehdi%', 'boo', '%mehdifathi%', 10], $users->getBindings());
+    }
+
+    //todo we can make a feature for override custom detection over default detection
+    public function testSetDetection1()
+    {
+        $builder = new EloquentBuilderTestModelNewStrategyStub();
+
+        $builder = $builder->query()
+            ->where('count_posts', '=', 10)
+            ->where('baz', '=', []);
+
+        $this->request->shouldReceive('query')->andReturn([
+            'count_posts' => 10,
+            'baz'         => [
+                'value'               => 'boo',
+                'limit'               => 10,
+                'email'               => 'mehdifathi',
+                'like_relation_value' => 'mehdi',
+            ],
+        ]);
+
+        //todo this method disable load detection default
+
+        $users = EloquentBuilderTestModelNewStrategyStub::SetLoadDefaultDetection(false)->filter();
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+    }
+
+    public function testAcceptRequest()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->where('baz', 'joo');
+
+        $this->request->shouldReceive('query')->andReturn(
+            [
+                'baz'          => 'joo',
+                'google_index' => true,
+                'gmail_api'    => 'dfsmfjkvx#$cew45',
+            ]
+        );
+
+        $users = EloquentBuilderTestModelParentStub::AcceptRequest([
+            'baz',
+        ])->filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+        $this->assertEquals(['joo'], $builder->getBindings());
+        $this->assertEquals(['joo'], $users->getBindings());
+
+        $this->assertEquals(['baz' => 'joo'], EloquentFilter::getAcceptedRequest());
+    }
+
+    public function testAcceptRequest2()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $this->request->shouldReceive('query')->andReturn(
+            [
+                'google_index' => 'joo',
+                'gmail_api'    => 'joo',
+                'baz'          => 'joo',
+            ]
+        );
+
+        $users = EloquentBuilderTestModelParentStub::AcceptRequest([
+            'show_new_users',
+        ])->filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+        $this->assertEquals([], $builder->getBindings());
+        $this->assertEquals([], $users->getBindings());
+
+        $this->assertEquals(['show_new_users'], EloquentFilter::getAcceptedRequest());
+    }
+
+    public function testAcceptRequestNull()
+    {
+        $builder = new EloquentBuilderTestModelParentStub();
+
+        $builder = $builder->where('baz', 'joo');
+
+        $this->request->shouldReceive('query')->andReturn(
+            [
+                'baz'          => 'joo',
+            ]
+        );
+
+        $users = EloquentBuilderTestModelParentStub::AcceptRequest([])->filter($this->request->query());
+
+        $this->assertSame($users->toSql(), $builder->toSql());
+        $this->assertEquals(['joo'], $builder->getBindings());
+        $this->assertEquals(['joo'], $users->getBindings());
+
+        $this->assertEquals(null, EloquentFilter::getAcceptedRequest());
     }
 
     public function tearDown(): void

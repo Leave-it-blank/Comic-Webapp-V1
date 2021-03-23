@@ -23,6 +23,7 @@ use ReflectionException;
 class QueryFilter
 {
     use HelperFilter;
+    use HelperEloquentFilter;
 
     /**
      * @var
@@ -34,9 +35,34 @@ class QueryFilter
     protected $builder;
 
     /**
-     * @var DetectionFactory
+     * @var
      */
     protected $detect;
+
+    /**
+     * @var
+     */
+    protected $accept_request;
+
+    /**
+     * @var
+     */
+    protected $ignore_request;
+
+    /**
+     * @var
+     */
+    protected $detect_injected;
+
+    /**
+     * @var
+     */
+    protected $default_detect;
+
+    /**
+     * @var DetectionFactory
+     */
+    private $detect_factory;
 
     /**
      * QueryFilter constructor.
@@ -49,52 +75,20 @@ class QueryFilter
         if (!empty($request)) {
             $this->setRequest($request);
         }
-        $this->detect = $this->__getDetectorsInstanceArray($detect_injected);
-    }
-
-    /**
-     * @param Builder    $builder
-     * @param array|null $request
-     * @param array|null $ignore_request
-     * @param array      $detect_injected
-     *
-     * @return Builder
-     */
-    public function apply(Builder $builder, array $request = null, array $ignore_request = null, array $detect_injected = null): Builder
-    {
-        $this->builder = $builder;
-
-        if (!empty($request)) {
-            $this->setRequest($request);
-        }
-        $this->setFilterRequests($ignore_request, $this->builder->getModel());
-
-        $model = $this->builder->getModel();
-
         if (!empty($detect_injected)) {
-            $this->detect = $this->__getDetectorsInstanceArray($detect_injected);
+            $this->setDetectInjected($detect_injected);
         }
 
-        $filters = collect($this->getRequest())->map(function ($values, $filter) use ($model) {
-            return $this->resolve($filter, $values, $model);
-        })->toArray();
-
-        $filters = array_reverse($filters, -1);
-
-        return app(Pipeline::class)
-            ->send($this->builder)
-            ->through($filters)
-            ->thenReturn();
+        $this->setDefaultDetect($this->__getDefaultDetectorsInstance());
+        $this->detect_factory = $this->__getDetectorFactory($this->getDefaultDetect(), $this->getDetectInjected());
     }
 
     /**
-     * @param array|null $detect_injected
-     *
-     * @return DetectionFactory
+     * @return array
      */
-    private function __getDetectorsInstanceArray(array $detect_injected = null)
+    private function __getDefaultDetectorsInstance(): array
     {
-        $default_detect = [
+        return [
             SpecialCondition::class,
             WhereCustomCondition::class,
             WhereBetweenCondition::class,
@@ -105,16 +99,105 @@ class QueryFilter
             WhereHasCondition::class,
             WhereCondition::class,
         ];
+    }
 
+    /**
+     * @param mixed $default_detect
+     */
+    public function setDefaultDetect($default_detect): void
+    {
+        $this->default_detect = $default_detect;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultDetect()
+    {
+        return $this->default_detect;
+    }
+
+    /**
+     * @param array $detect
+     */
+    public function setDetect(array $detect): void
+    {
+        $this->detect = $detect;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDetect()
+    {
+        return $this->detect;
+    }
+
+    /**
+     * @param mixed $detect_injected
+     */
+    public function setDetectInjected($detect_injected): void
+    {
+        $this->detect_injected = $detect_injected;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDetectInjected()
+    {
+        return $this->detect_injected;
+    }
+
+    /**
+     * @param Builder    $builder
+     * @param array|null $request
+     * @param array|null $ignore_request
+     * @param array|null $accept_request
+     * @param array      $detect_injected
+     *
+     * @return Builder
+     */
+    public function apply(Builder $builder, array $request = null, array $ignore_request = null, array $accept_request = null, array $detect_injected = null): Builder
+    {
+        $this->builder = $builder;
+
+        if (!empty($request)) {
+            $this->setRequest($request);
+        }
+        $this->setFilterRequests($ignore_request, $accept_request, $this->builder->getModel());
+
+        if (!empty($detect_injected)) {
+            $this->setDetectInjected($detect_injected);
+            $detect_factory = $this->__getDetectorFactory($this->getDefaultDetect(), $this->getInjectedDetections());
+            $this->detect_factory = $detect_factory;
+        }
+
+        $filter_detections = $this->getFilterDetections();
+
+        return app(Pipeline::class)
+            ->send($this->builder)
+            ->through($filter_detections)
+            ->thenReturn();
+    }
+
+    /**
+     * @param array|null $default_detect
+     * @param array|null $detect_injected
+     *
+     * @return DetectionFactory
+     */
+    private function __getDetectorFactory(array $default_detect = null, array $detect_injected = null)
+    {
         $detections = $default_detect;
+
         if (!empty($detect_injected)) {
             $detections = array_merge($detect_injected, $default_detect);
         }
 
-        return
-            new DetectionFactory(
-                $detections
-            );
+        $this->setDetect($detections);
+
+        return app(DetectionFactory::class, ['detections' => $detections]);
     }
 
     /**
@@ -128,8 +211,22 @@ class QueryFilter
      */
     private function resolve($filterName, $values, $model)
     {
-        $detect = $this->detect::detect($filterName, $values, $model);
+        $detect = $this->detect_factory::detect($filterName, $values, $model);
 
         return app($detect, ['filter' => $filterName, 'values' => $values]);
+    }
+
+    /**
+     * @return array
+     */
+    private function getFilterDetections(): array
+    {
+        $model = $this->builder->getModel();
+
+        $filter_detections = collect($this->getRequest())->map(function ($values, $filter) use ($model) {
+            return $this->resolve($filter, $values, $model);
+        })->reverse()->toArray();
+
+        return $filter_detections;
     }
 }

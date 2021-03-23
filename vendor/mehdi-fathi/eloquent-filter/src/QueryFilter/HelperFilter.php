@@ -68,7 +68,7 @@ trait HelperFilter
         foreach ($request as $key => $item) {
             if (is_array($item)) {
                 if (array_key_exists('start', $item) && array_key_exists('end', $item)) {
-                    if (empty($item['start']) && empty($item['end'])) {
+                    if (!isset($item['start']) && !isset($item['end'])) {
                         unset($request[$key]);
                     }
                 }
@@ -81,21 +81,28 @@ trait HelperFilter
     /**
      * @return array|null
      */
-    protected function getRequest(): ?array
+    private function getRequest(): ?array
     {
         return $this->request;
     }
 
     /**
      * @param array|null $ignore_request
+     * @param array|null $accept_request
      * @param            $builder_model
      *
      * @return array|null
      */
-    protected function setFilterRequests(array $ignore_request = null, $builder_model): ?array
+    protected function setFilterRequests(array $ignore_request = null, array $accept_request = null, $builder_model): ?array
     {
-        if (!empty($ignore_request) && !empty($this->getRequest())) {
-            $this->setIgnoreRequest($ignore_request);
+        if (!empty($this->getRequest())) {
+            if (!empty($ignore_request)) {
+                $this->updateRequestByIgnoreRequest($ignore_request);
+            }
+            if (!empty($accept_request)) {
+                $this->setAcceptRequest($accept_request);
+                $this->updateRequestByAcceptRequest($this->getAcceptRequest());
+            }
         }
         if (!empty($this->getRequest())) {
             foreach ($this->getRequest() as $name => $value) {
@@ -117,21 +124,69 @@ trait HelperFilter
      */
     private function setIgnoreRequest(array $ignore_request): void
     {
+        $this->ignore_request = $ignore_request;
+    }
+
+    /**
+     * @param array $accept_request
+     */
+    private function setAcceptRequest(array $accept_request): void
+    {
+        if (!empty($accept_request)) {
+            $this->accept_request = $accept_request;
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAcceptRequest()
+    {
+        return $this->accept_request;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getIgnoreRequest()
+    {
+        return $this->ignore_request;
+    }
+
+    /**
+     * @param $ignore_request
+     */
+    private function updateRequestByIgnoreRequest($ignore_request)
+    {
+        $this->setIgnoreRequest($ignore_request);
         $data = Arr::except($this->getRequest(), $ignore_request);
         $this->setRequest($data);
     }
 
     /**
-     * @param null $index
-     *
-     * @return array|mixed|null
+     * @param $accept_request
      */
-    public function filterRequests($index = null)
+    private function updateRequestByAcceptRequest($accept_request)
     {
-        if (!empty($index)) {
-            return $this->getRequest()[$index];
+        $accept_request_new = $this->array_slice_keys($this->getRequest(), $accept_request);
+        if (!empty($accept_request_new)) {
+            $this->setAcceptRequest($this->array_slice_keys($this->getRequest(), $accept_request));
+            $this->setRequest($this->getAcceptRequest());
+        } else {
+            $this->setRequest([]);
         }
+    }
 
-        return $this->getRequest();
+    /**
+     * @param $request
+     * @param null $keys
+     *
+     * @return array
+     */
+    private function array_slice_keys($request, $keys = null)
+    {
+        $request = (array) $request;
+
+        return array_intersect_key($request, array_fill_keys($keys, '1'));
     }
 }

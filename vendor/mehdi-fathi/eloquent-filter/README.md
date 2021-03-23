@@ -3,18 +3,18 @@
 
 ![alt text](./eloquent-filter.jpg "eloquent-filter")
 
-[![Latest Stable Version](https://poser.pugx.org/mehdi-fathi/eloquent-filter/v/stable)](https://packagist.org/packages/mehdi-fathi/eloquent-filter)
+[![Latest Stable Version](https://img.shields.io/packagist/v/mehdi-fathi/eloquent-filter)](https://packagist.org/packages/mehdi-fathi/eloquent-filter)
 ![Run tests](https://github.com/mehdi-fathi/eloquent-filter/workflows/Run%20tests/badge.svg?branch=master)
 [![License](https://poser.pugx.org/mehdi-fathi/eloquent-filter/license)](https://packagist.org/packages/mehdi-fathi/eloquent-filter)
 [![GitHub stars](https://img.shields.io/github/stars/mehdi-fathi/eloquent-filter)](https://github.com/mehdi-fathi/eloquent-filter/stargazers)
 [![StyleCI](https://github.styleci.io/repos/149638067/shield?branch=master)](https://github.styleci.io/repos/149638067)
 [![Build Status](https://travis-ci.org/mehdi-fathi/eloquent-filter.svg?branch=master)](https://travis-ci.org/mehdi-fathi/eloquent-filter)
-[![Total Downloads](https://poser.pugx.org/mehdi-fathi/eloquent-filter/downloads)](//packagist.org/packages/mehdi-fathi/eloquent-filter)
-[![Daily Downloads](https://poser.pugx.org/mehdi-fathi/eloquent-filter/d/daily)](//packagist.org/packages/mehdi-fathi/eloquent-filter)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/mehdi-fathi/eloquent-filter?color=blue)](https://packagist.org/packages/mehdi-fathi/eloquent-filter)
 
-The Eloquent filter is a package for filter data of models by the query string in the Laravel application.
+Eloquent Filter adds custom filters to your Eloquent Models in Laravel.
 It's easy to use and fully dynamic.
 
+[![Bitcoin Donate Button](http://KristinitaTest.github.io/donate/Bitcoin-Donate-button.png)](https://raw.githubusercontent.com/mehdi-fathi/eloquent-filter/master/donate.png)
 
 ## Table of Content
 - [Introduction](#Introduction)
@@ -27,14 +27,21 @@ It's easy to use and fully dynamic.
     - [Custom Detection Condition](#Custom-Detection-Condition)
 
 ## Requirements
-- PHP 7.2+
+- PHP 7.2+, 8.0 (new version)
 - Laravel 5.8+,6.x,7.x,8(prefer-stable)
 
 ## :microphone: Introduction
 
-Let's say we want to make an advanced search page with multiple filter option params. When we navigate to:
+Let's say we want to make an advanced search page with multiple filter option params.
+
+![alt text](https://raw.githubusercontent.com/mehdi-fathi/mehdi-fathi.github.io/master/eloquent-filter/assets/img/Esfand-05-1399%2022-23-21.gif "sample 1 eloquent-filter")
+
+### A simple implementation without Eloquent Filter
+The Request URI could look like this:
                                                                                      
     http://localhost:8000/users/index?age_more_than=25&gender=male&created_at=25-09-2019
+ 
+And a simple implementation in the Controller would look like this: 
  
 ```php
 <?php
@@ -66,20 +73,22 @@ class UserController extends Controller
     }
 }
 ```
-We check out a condition for each request.
+This solution is simple and would work fine.
+But you'd have to add a condition for each filter you need. 
+Especially with more complex filtering your code can become a Monster very fast! :boom: 
 
-In the future, if your project will need more filter requests at that time you should add many conditions to the above code.
-Imagine some of the queries may be advanced or complex therefore your code to be like MONSTER! :boom:
 
-The eloquent filter is proper to make advanced search filters or report pages. 
-Eloquent filter saves your time and destroys the complexity of your code.
+### A simple implementation with Eloquent Filter
 
-To filter that same input With Eloquent Filters:
+Eloquent Filter can help you to fix that problem. Just you will set query string to work with that.
+It will save you time and minimize the complexity of your code.
 
-Just change query string as the this example:
+After installing Eloquent Filter the request URI could look like this:
              
     http://localhost:8000/users/list?age_more_than[operator]=>&age[value]=35&gender=male&created_at[operator]==>&created_at[value]=25-09-2019
 
+
+And in the controller you'd just need that one line: 
 ```php
 /**
  * Class UsersController.
@@ -97,15 +106,15 @@ class UsersController
     }
 }
 ```
-Just this!
+With this Eloquent filter implementation you can use all the documented filters!
 
 ## :electric_plug: Installation
 
-1- Run the Composer command for installing latest version
+1- Run this Composer command to install the latest version
 
       $ composer require mehdi-fathi/eloquent-filter
       
-- **Note**  that installed for laravel version previous of 5.8 you should install version 2.2.5 
+- **Note**  for Laravel versions older than 5.8 you should install version 2.2.5 
 
         $ composer require mehdi-fathi/eloquent-filter:2.2.5
 
@@ -199,22 +208,36 @@ class UsersController
     }
 }
 ```
--**Note**  that the Eloquent Filter by default using the query string or request data to make queries in the laravel.
+-**Note**  that the Eloquent Filter by default using the query string to make queries in the laravel.
  Also, you can set the array to `filter` method Model for making your own custom condition without query string.
 
 -**Note**  that you must unset your own param as perpage. Just you can set page param for paginate this param ignore from filter.
 
-You can ignore some request params by use of code it.
+- You can ignore some request params by use of code it.
 
 ```php
 
-User::ignoreRequest(['perpage'])->filter()
+User::ignoreRequest(['perpage'])
+            ->filter()
             ->paginate(request()->get('perpage'), ['*'], 'page');
 ```
 
 Call `ignoreRequest` will ignore some requests that you don't want to use in conditions eloquent filter. 
 For example perpage param will never be in the conditions eloquent filter. 
 it's related to the paginate method. `page` param ignore by default in the Eloquent Filter Laravel.
+
+- You can filter some request params for using in eloquent filter.
+
+```php
+
+User::AcceptRequest(['username','id'])
+            ->filter()
+            ->paginate(request()->get('perpage'), ['*'], 'page');
+```
+
+Call `AcceptRequest` will accept requests that you want to use in conditions eloquent filter. 
+For example `username` and `id` param will be in the conditions eloquent filter. Just notice you must set `$whiteListFilter`
+in Model. This method is useful for query string manipulation by user.
 
 
 - Another example use of a filter eloquent filter.
@@ -223,6 +246,10 @@ User::filter()->paginate();
 ```
 - `EloquentFilter::filterRequests()` get all params that used by the Eloquent Filter. You can set key to get specific index.
 For example `EloquentFilter::filterRequests('username')` it's getting username index.
+
+- `EloquentFilter::getAcceptedRequest()` get all params that set by the AcceptRequest method.
+
+- `EloquentFilter::getIgnoredRequest()` get all ignored params that set by the getIgnoreRequest method.
 
 ### Simple Examples
 
@@ -364,11 +391,15 @@ You can set special params `limit` and `orderBy` in query string for make query 
 
 SELECT ... WHERE ... order by `id` desc limit 1 offset 0
 ```
-
 ```
 /users/list?f_params[orderBy][field]=id&f_params[orderBy][type]=ASC
 
-SELECT ... WHERE ... order by `id` ASC limit 10 offset 0
+SELECT ... WHERE ... order by `id` asc
+```
+```
+/users/list?f_params[orderBy][field]=id,count_posts&f_params[orderBy][type]=ASC
+
+SELECT ... WHERE ...  order by `id` asc, `count_posts` asc
 ```
 ***Where between***
 
@@ -585,6 +616,12 @@ You just run code ` User::filter();` for see result.
 $users = User::SetCustomDetection([WhereRelationLikeCondition::class])->filter();
 ```
 
+-**Note** You can disable `EloquentFilterCustomDetection` on the fly by this code :
+
+```php
+ USer::SetLoadDefaultDetection(false)->filter();
+```
+
 -**Note** You can set many detection condition for example:
 
 ```php
@@ -602,6 +639,9 @@ class User extends Model
     }
 }
 ```
+
+- `EloquentFilter::getInjectedDetections()` get all your custom injected detection.
+
 -**Note** Every custom detection will run before detection by default eloquent filter.
 
 - If you have any idea about the Eloquent Filter i will glad to hear that.

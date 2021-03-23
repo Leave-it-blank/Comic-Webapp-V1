@@ -2,8 +2,6 @@
 
 namespace eloquentFilter\QueryFilter\Detection;
 
-use Illuminate\Database\Eloquent\Model;
-
 /**
  * Interface Detector.
  */
@@ -12,7 +10,7 @@ interface DetectorContract
     /**
      * @param $field
      * @param $params
-     * @param Model|null $model
+     * @param bool $is_override_method
      *
      * @return mixed
      */

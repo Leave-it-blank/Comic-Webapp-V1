@@ -16,30 +16,53 @@ trait Filterable
     protected $ignore_request = null;
 
     /**
-     * @var
+     * @var null
+     */
+    protected $accept_request = null;
+
+    /**
+     * @var bool
+     */
+    protected $load_default_detection = true;
+
+    /**
+     * @var null
      */
     protected $object_custom_detect = null;
 
     /**
      * @param            $query
-     * @param array|null $reqesut
+     * @param array|null $request
      *
      * @return Builder
      */
-    public function scopeFilter($query, ?array $reqesut = null): Builder
+    public function scopeFilter($query, ?array $request = null): Builder
     {
-        return EloquentFilter::apply($query, $reqesut, $this->ignore_request, $this->getObjectCustomDetect());
+        return EloquentFilter::apply($query, $request, $this->ignore_request, $this->accept_request, $this->getObjectCustomDetect());
     }
 
     /**
      * @param            $query
-     * @param array|null $reqesut
+     * @param array|null $request
      *
      * @return $this
      */
-    public function scopeIgnoreRequest($query, ?array $reqesut = null)
+    public function scopeIgnoreRequest($query, ?array $request = null)
     {
-        $this->ignore_request = $reqesut;
+        $this->ignore_request = $request;
+
+        return $this;
+    }
+
+    /**
+     * @param            $query
+     * @param array|null $request
+     *
+     * @return $this
+     */
+    public function scopeAcceptRequest($query, ?array $request = null)
+    {
+        $this->accept_request = $request;
 
         return $this;
     }
@@ -60,9 +83,9 @@ trait Filterable
     /**
      * @return mixed
      */
-    public function getObjectCustomDetect()
+    private function getObjectCustomDetect()
     {
-        if (method_exists($this, 'EloquentFilterCustomDetection') && empty($this->object_custom_detect)) {
+        if (method_exists($this, 'EloquentFilterCustomDetection') && empty($this->object_custom_detect) && $this->getLoadDefaultDetection()) {
             $this->setObjectCustomDetect($this->EloquentFilterCustomDetection());
         }
 
@@ -72,7 +95,7 @@ trait Filterable
     /**
      * @param mixed $object_custom_detect
      */
-    public function setObjectCustomDetect($object_custom_detect): void
+    private function setObjectCustomDetect($object_custom_detect): void
     {
         $this->object_custom_detect = $object_custom_detect;
     }
@@ -80,7 +103,7 @@ trait Filterable
     /**
      * @return mixed
      */
-    public static function getWhiteListFilter()
+    public static function getWhiteListFilter(): array
     {
         return self::$whiteListFilter;
     }
@@ -96,9 +119,7 @@ trait Filterable
     }
 
     /**
-     * @param $array
-     *
-     * @return mixed
+     * @param array $array
      */
     public static function setWhiteListFilter(array $array)
     {
@@ -113,5 +134,26 @@ trait Filterable
     public function checkModelHasOverrideMethod(string $method): bool
     {
         return (bool) method_exists($this, $method);
+    }
+
+    /**
+     * @param $query
+     * @param $load_default_detection
+     *
+     * @return $this
+     */
+    public function scopeSetLoadDefaultDetection($query, $load_default_detection)
+    {
+        $this->load_default_detection = $load_default_detection;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getLoadDefaultDetection(): bool
+    {
+        return $this->load_default_detection;
     }
 }
