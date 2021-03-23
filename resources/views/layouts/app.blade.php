@@ -23,7 +23,7 @@
 
 
 @include('inc.navbar')
-<body class="text-sm " style="background-color: {{ $settings->theme_name }}; color: {{ $settings->text_meta }};">
+<body class="text-sm font-sans " style="background-color: {{ $settings->theme_name }}; color: {{ $settings->text_meta }};">
     @include('inc.sidebar_mainpage')
 
     @include('inc.popupside')

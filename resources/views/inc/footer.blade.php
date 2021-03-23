@@ -42,12 +42,7 @@
 
         <div class="pt-5 md:flex md:items-center md:justify-center hover:border-yellow-500 border-t-2 border-white text-yellow-500 pl-5 " >
             <ul class="">
-                <li class="md:mx-2 md:inline leading-7 text-sm" id="footer-navi-2"><a
-                        class=" underline text-small" href="/disclaimer">Disclaimer</a></li>
-                <li class="md:mx-2 md:inline leading-7 text-sm" id="footer-navi-2"><a
-                        class="underline text-small" href="/cookie">Cookie policy</a></li>
-                <li class="md:mx-2 md:inline leading-7 text-sm" id="footer-navi-2"><a
-                        class=" underline text-small" href="/privacy">Privacy</a></li>
+              
             </ul>
         </div>
 
