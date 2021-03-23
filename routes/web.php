@@ -24,19 +24,17 @@ Route::get('delete/{id}','UserDeleteController@destroy');
 
  */
 
-Route::namespace ('Reader')->prefix('series')->name('series.')->group(function () {
+Route::namespace ('Reader')->name('project.manga.details')->group(function () {
 
-    Route::resource('/view/{view}/si', 'ViewComicController')->except([
-        'create', 'store', 'update', 'destroy', 'edit', 'index',
-    ]);
+    Route::get('/manga/{manga}/id/{id}', 'ViewComicController@manga_show');
 
 });
 
-Route::namespace ('Reader')->prefix('series')->name('series.')->group(function () {
 
-    Route::resource('/view/{view}/{si}/chapter', 'ChapterController')->except([
-        'create', 'store', 'update', 'destroy', 'edit',
-    ]);
+
+Route::namespace ('Reader')->name('project.manga.chapter')->group(function () {
+
+    Route::get('manga/{manga}/{id}/chapter/{chapter}', 'ChapterController@manga_chapter');
 });
 
 Route::namespace ('Reader')->name('reader.')->group(function () {

@@ -13,7 +13,7 @@
     <div class="mt-4 m-2 max-w-lg mx-auto grid gap-4 lg:grid-cols-4 lg:max-w-none">
       @foreach ($chapters as $chapter)
     <div class="flex m-2 flex-col rounded shadow overflow-hidden h-80">
-    <a href="{{ route('series.chapter.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug, 'chapter' => $chapter->number]) }}" class="flex-shrink-0">
+    <a href="{{ route('project.manga.chapter', [ 'manga' => $chapter->comic->slug, 'id' => $chapter->comic->id, 'chapter' => $chapter->number ]) }}" class="flex-shrink-0">
     <img class="w-full  object-cover" src="{{ $chapter->comic->cover }}" style="height: 340px" alt="">
     </a>
     <div class="flex-1 bg-black bg-opacity-75 p-4 flex flex-col justify-between">
@@ -21,7 +21,7 @@
   
     </span>
     <span class="flex-1 mt-2">
-    <a href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}" class="block">
+    <a href="{{ route('project.manga.details', [ 'manga' => $chapter->comic->slug, 'id' => $chapter->comic->id ]) }}" class="block">
     <p class="text-xl font-semibold text-yellow-500">
       {{ $chapter->comic->title }}
     </p>

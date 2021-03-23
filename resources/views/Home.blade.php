@@ -82,7 +82,7 @@
                                     ">
                                 <div class="w-1/4 grid  ">
 
-                                    <a href="{{ route('series.si.show', ['view' => $comic->id, 'si' => $comic->slug]) }}"
+                                    <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}"
                                         class="flex"> <img class="rounded-sm shadow-lg antialiased "
                                             src="{{ $comic->cover }}"> </a>
                                     <div
@@ -96,14 +96,14 @@
                                     <div class="w-full bg-black bg-opacity-25 text-center text-gray-700 font-semibold p-2 relative pt-3 md:pt-0">
                                         @if (strlen($comic->title) > 20)
 
-                                            <a href="{{ route('series.si.show', ['view' => $comic->id, 'si' => '1']) }}"
+                                            <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}"
                                                 class="block">
                                                 <div class=" text-lg sm:text-xl  md:text-sm xl:text-xl md:pt-2 text-yellow-500 leading-tight">
                                                     {{ \Illuminate\Support\Str::limit($comic->title, 18, $end = '...') }}
                                                 </div>
                                             </a>
                                         @else
-                                            <a href="{{ route('series.si.show', ['view' => $comic->id, 'si' => '1']) }}"
+                                            <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}"
                                                 class="block">
                                                 <div class="  text-lg sm:text-xl md:text-sm xl:text-xl md:pt-2 text-yellow-500  leading-tight">
                                                     {{ $comic->title }}</div>
@@ -116,7 +116,7 @@
                                         <?php $comic_number = $comic->chapter_number($comic) ?>
                                             <div class=" text-gray-300 hover:text-gray-400 text-right opacity-75 cursor-pointer p-2">
                                                 <a
-                                                    href="{{ route('series.chapter.show', ['view' => $comic->id, 'si' => $comic->slug, 'chapter' => $comic_number ]) }}">
+                                                    href="{{ route('project.manga.chapter', [ 'manga' => $comic->slug, 'id' => $comic->id, 'chapter' => $comic_number ]) }}">
                                                     <span class=" text-xs sm:text-sm md:text-xs lg:text-sm mb-2 pt-2">
                                                         {{ 'Chapter' }} {{ $comic_number  }}</span>
                                                 </a>
@@ -170,7 +170,7 @@
                             ">
                         <div class="w-1/4 grid  ">
 
-                            <a href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}"
+                            <a href="#"
                                 class="flex"> <img class="rounded-sm shadow-lg antialiased "
                                     src="{{ $chapter->comic->cover }}"> </a>
                             <div
@@ -184,14 +184,14 @@
                             <div class="w-full bg-black bg-opacity-25 text-center text-gray-700 font-semibold p-2 relative pt-3 md:pt-0">
                                 @if (strlen($chapter->comic->title) > 20)
 
-                                    <a href="{{ route('series.si.show', ['view' => $comic->id, 'si' => '1']) }}"
+                                    <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}"
                                         class="block">
                                         <div class=" text-lg sm:text-xl  md:text-sm xl:text-xl md:pt-2 text-yellow-500 leading-tight">
                                             {{ \Illuminate\Support\Str::limit($chapter->comic->title, 18, $end = '...') }}
                                         </div>
                                     </a>
                                 @else
-                                    <a href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => '1']) }}"
+                                    <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}"
                                         class="block">
                                         <div class="  text-lg sm:text-xl md:text-sm xl:text-xl md:pt-2 text-yellow-500  leading-tight">
                                             {{ $chapter->comic->title }}</div>
@@ -200,7 +200,7 @@
                                 
                                     <div class=" text-gray-300 hover:text-gray-400 text-right opacity-75 cursor-pointer p-2">
                                         <a
-                                            href="{{ route('series.chapter.show', ['view' => $comic->id, 'si' => $comic->slug, 'chapter' => $chapter->number]) }}">
+                                            href="{{ route('project.manga.chapter', [ 'manga' => $comic->slug, 'id' => $comic->id, 'chapter' => $comic_number ]) }}">
                                             <span class=" text-xs sm:text-sm md:text-xs lg:text-sm mb-2 pt-2">
                                                 {{ 'Chapter' }} {{ $chapter->number}}</span>
                                         </a>

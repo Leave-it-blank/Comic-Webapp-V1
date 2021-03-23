@@ -54,6 +54,11 @@ class chapter extends Model
        return $this->belongsTo( \App\comic::class , 'comic_id');
 	}
 
+	public function comic_details($id) {
+		
+		return 0;
+
+	}
 
 /*
 

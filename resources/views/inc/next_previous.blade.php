@@ -4,12 +4,12 @@
         @if ($previous !== null)
             <div
                 class="npmbutton hover:bg-gray-50  hover:text-yellow-500  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <a href="{{ URL::to('series/view/' . $id . '/' . $si . '/chapter/' . $previous) }}">Previous</a> </div>
+                <a href="{{ URL::to('/manga/' . $manga . '/' . $id  .  '/chapter/' . $previous) }}">Previous</a> </div>
         @endif
 
     </div>
     <div>
-        <a href="{{ route('series.si.show', ['view' => $chapter->comic->id, 'si' => $chapter->comic->slug]) }}"
+        <a href="{{ route('project.manga.details', [ 'manga' => $comics->slug, 'id' => $comics->id ]) }}"
             class="npmbutton hover:bg-gray-50 hover:text-yellow-500  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             Back to Series
         </a>
@@ -19,8 +19,8 @@
         @if ($next !== null)
             <div
                 class="npmbutton hover:bg-gray-50 hover:text-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                <a href="{{ URL::to('series/view/' . $id . '/' . $si . '/chapter/' . $next) }}">Next</a> </div>
+                <a href="{{ URL::to('/manga/' . $manga . '/' . $id  .  '/chapter/' . $next) }}">Next</a> </div>
         @endif
-
+       <!-- si went to that hole between / and chapter ~~}} -->
     </div>
 </div>

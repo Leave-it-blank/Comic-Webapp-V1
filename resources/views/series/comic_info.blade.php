@@ -63,7 +63,7 @@
 			@foreach( $chapters as $chapter)
 		  <!-- Grid column -->
 		  <div class=" flex flex-col p-1 justify-items-center justify-center lg:w-1/2 lg:w-1/3 xl:w-1/4">
-			<a class="px-5 py-0  rounded-sm justify-items-center shadow-sm bg-white  text-left border-2 m-2 border-gray-400" href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug , 'chapter' => $chapter->number]) }}"> Chapter {{ $chapter->number}} 
+			<a class="px-5 py-0  rounded-sm justify-items-center shadow-sm bg-white  text-left border-2 m-2 border-gray-400" href="{{ route('project.manga.chapter', [ 'manga' => $chapter->comic->slug, 'id' => $chapter->comic->id, 'chapter' => $chapter->number ]) }}"> Chapter {{ $chapter->number}} 
 			  <!-- Card contents -->
 			 
 			<br>  <span class="mute text-sm text-right text-gray-500">   {{ $chapter->name }} </span> 
@@ -80,7 +80,7 @@
 			@foreach( $chapters as $chapter)
 		  <!-- Grid column -->
 		  <div class=" flex flex-col p-1 justify-items-center lg:w-1/4 lg:w-1/8">
-			<a class="px-5 py-0  rounded-sm justify-items-center shadow-sm border-2 bg-white text-left m-2 border-gray-400" href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug , 'chapter' => $chapter->number]) }}"> Chapter {{ $chapter->number}} 
+			<a class="px-5 py-0  rounded-sm justify-items-center shadow-sm border-2 bg-white text-left m-2 border-gray-400" href="{{ route('project.manga.chapter', [ 'manga' => $chapter->comic->slug, 'id' => $chapter->comic->id, 'chapter' => $chapter->number ]) }}"> Chapter {{ $chapter->number}} 
 			  <!-- Card contents -->
 			 
 			<br>  <span class="mute text-sm text-right text-gray-500">   {{ $chapter->name }} </span> 

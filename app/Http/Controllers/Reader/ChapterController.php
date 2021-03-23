@@ -17,42 +17,10 @@ class ChapterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function manga_chapter(comic $comic, $manga, $id, $number){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function show(comic $comic, $id, $slug, $number)
-    {
-       
-
+      
         if ($comics = Comic::find($id)) {
 
 
@@ -85,13 +53,11 @@ class ChapterController extends Controller
 
                 'id' => $id,
 
-                'si' => $slug,
-
                 'chapters' => $chapters,
 
-                'comics' => $comics,
+                'manga' => $manga,
 
-               
+                'comics' => $comics,
 
                 'previous' =>  $previous,
 
@@ -106,40 +72,5 @@ class ChapterController extends Controller
             return redirect()->route('reader.comics.index');
 
         }
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(chapter $chapter)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, chapter $chapter)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(chapter $chapter)
-    {
-        //
     }
 }

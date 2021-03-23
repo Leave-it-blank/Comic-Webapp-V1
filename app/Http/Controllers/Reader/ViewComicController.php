@@ -18,63 +18,38 @@ class ViewComicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        
-    }
+  
+    public function manga_show(comic $comic, $manga , $id){
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function show(comic $comic, $id, $slug)
-    {
-
-        $settings = DB::table('settings')->where('id', '1')->first();
-     
-
-        if ($comics = Comic::find($id)) {
-            $comics->increment('view_count');
-            OpenGraph::setDescription($comics->desc);
-            OpenGraph::setTitle($comics->title);
+        if ($chapters = Chapter::with('comic')->where('comic_id', $id)->orderby('number')->get()) {
+           
+           
+            foreach($chapters ->take(1) as $chapter)
+            {
+              
+            $chapter->comic()->increment('view_count');
+            OpenGraph::setDescription($chapter->comic->desc);
+            OpenGraph::setTitle($chapter->comic->title);
             OpenGraph::addProperty('determiner', 'Manga'); 
-            OpenGraph::addProperty('image' , $comic->settings_site_url() . $comics->cover);
+            OpenGraph::addProperty('image' , $comic->settings_site_url() . $chapter->comic->cover);
+            $comic_details = $chapter->comic;
+            
+            }
+        
 
-            $chapters = Chapter::where('comic_id', $id)->orderby('number')->get();
 
             return View::make('series.comic_info')->with([
 
-                'comics' => $comics,
+                'comics' => $comic_details,
 
                 'id' => $id,
-                'si' => $slug,
+
+                'manga' => $manga,
 
                 'chapters' => $chapters,
 
-                'comics' => $comics,
+               
             
 
             ]);
@@ -85,39 +60,5 @@ class ViewComicController extends Controller
 
         }
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(comic $comic)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, comic $comic)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\comic  $comic
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(comic $comic)
-    {
-        //
     }
 }
