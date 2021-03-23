@@ -63,7 +63,7 @@ class ViewComicController extends Controller
             OpenGraph::addProperty('determiner', 'Manga'); 
             OpenGraph::addProperty('image' , $comic->settings_site_url() . $comics->cover);
 
-            $chapters = Chapter::where('comic_id', $id)->get();
+            $chapters = Chapter::where('comic_id', $id)->orderby('number')->get();
 
             return View::make('series.comic_info')->with([
 

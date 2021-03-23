@@ -40,7 +40,7 @@ class CreateComicsTable extends Migration
 			$table->id()->unique();
 			$table->string('name', 40)->nullable();
 			$table->string('volume', 40)->nullable();
-			$table->text('number');
+			$table->integer('number')->unsigned();
 			$table->text('chapterslug')->nullable();
 		    $table->boolean('ongoing') ->default(true);
 			$table->string('cover')->nullable();
