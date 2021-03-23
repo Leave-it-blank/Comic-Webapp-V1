@@ -62,7 +62,7 @@
                                             class="text-gray-500 hover:text-yellow-500">Edit</a>
                                     </td>
                                     <td class="px-2 py-4 m-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">
-                                        <a href="{{ route('series.chapter.show', ['view' => $comics->id, 'si' => $comics->slug, 'chapter' => $chapter->number]) }}"
+                                        <a href="{{ route('project.manga.chapter', [ 'manga' => $comics->slug, 'id' => $comics->id, 'chapter' => $chapter->number ]) }}"
                                             class="text-gray-500 hover:text-yellow-500">View</a>
                                     </td>
                                     <td class="px-2 py-4 m-4 whitespace-no-wrap text-right text-sm leading-5 font-medium">

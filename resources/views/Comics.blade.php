@@ -21,9 +21,9 @@
       <?php $comic_chapter_number = $comic->chapter_number($comic); ?>
        <div class="flex flex-col rounded shadow overflow-hidden h-80">   
       @if ($comic_chapter_number == null)
-      <a href="{{ route('series.si.show', ['view' => $comic->id, 'si' => $comic->slug]) }}" class="flex-shrink-0">
+      <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }} " class="flex-shrink-0">
        @else
-      <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }}" class="flex-shrink-0">
+      <a href="{{ route('project.manga.chapter', [ 'manga' => $comic->slug, 'id' => $comic->id, 'chapter' => $comic_chapter_number ]) }}" class="flex-shrink-0">
        @endif
       <img class="w-full  object-cover" src="{{ $comic->cover }}" style="height: 340px" alt="">
       </a>
@@ -32,7 +32,7 @@
     
       </span>
       <span class="flex-1 mt-2">
-      <a href="{{ route('project.manga.chapter', [ 'manga' => $comic->slug, 'id' => $comic->id, 'chapter' => $comic_chapter_number ]) }}" class="block">
+      <a href="{{ route('project.manga.details', [ 'manga' => $comic->slug, 'id' => $comic->id ]) }} " class="block">
       <p class="text-xl font-semibold text-center text-yellow-500">
         {{ $comic->title }}
       </p>
