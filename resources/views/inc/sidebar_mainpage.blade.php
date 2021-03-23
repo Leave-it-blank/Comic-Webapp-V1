@@ -17,7 +17,7 @@
         @endif
 
     @else
-     <a href="/dashboard" class="transform hover:scale-110 hover:bg-yellow-500 transition ease-out duration-300 text-sm"><i class="material-icons">dashboard</i><span class="icon-text pl-3"></span>&nbsp;&nbsp;&nbsp;&nbsp;DashBoard<span></a>
+     <a href="{{ route('reader.dash_home') }}" class="transform hover:scale-110 hover:bg-yellow-500 transition ease-out duration-300 text-sm"><i class="material-icons">dashboard</i><span class="icon-text pl-3"></span>&nbsp;&nbsp;&nbsp;&nbsp;DashBoard<span></a>
         
         <br>
         

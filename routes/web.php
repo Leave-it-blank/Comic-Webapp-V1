@@ -30,7 +30,11 @@ Route::namespace ('Reader')->name('project.manga.details')->group(function () {
 
 });
 
+Route::namespace ('Reader\Dashboard')->name('reader.dash_home')->group(function () {
 
+    Route::get('/reader/dashboard', 'DashHomeController@dashboard');
+
+});
 
 Route::namespace ('Reader')->name('project.manga.chapter')->group(function () {
 
@@ -64,13 +68,13 @@ Auth::routes();
 
 Route::group(['middleware' => ['permission:create series|admin']], function () {
 
-    Route::get('createseries', 'CreateseriesController@index');
+    Route::get('admin/create/comic', 'CreateseriesController@index')->name('admin.create.series');
 
 });
 
 Route::group(['middleware' => ['permission:admin']], function () {
 
-    Route::get('settings', 'SettingsController@index');
+    Route::get('admin/settings', 'SettingsController@index')->name('admin.settings');
 
 });
 
@@ -78,7 +82,7 @@ Route::group(['middleware' => ['permission:admin']], function () {
 
     Route::namespace ('Admin')->prefix('admin')->name('admin.')->group(function () {
 
-        Route::get('features', 'FeaturesController@index')->name('features.');
+        Route::get('features', 'FeaturesController@index')->name('features');
         Route::resource('/features/carousel', 'CarouselController');
         Route::resource('/users', 'UsersController');
       
@@ -99,12 +103,11 @@ Route::group(['middleware' => ['permission:edit series|admin|create series|delet
 
 });
 
-Route::group(['middleware' => ['permission:admin|reader|create series|delete series|edit series']], function () {
+Route::group(['middleware' => ['permission:admin|create series|delete series|edit series']], function () {
 
-    Route::get('series', 'SeriesController@index');
 
-    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('admin/dashboard', 'DashboardController@index')->name('admin.dashboard');
 
-    Route::get('profile', 'UserProfileController@index');
+    Route::get('admin/profile', 'UserProfileController@index')->name('admin.profile');
 
 });

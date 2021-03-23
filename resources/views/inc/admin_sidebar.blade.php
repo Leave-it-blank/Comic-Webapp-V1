@@ -22,13 +22,13 @@
         <ul class="text-sm mt-6 ">
 
             <li class=" py-1">
-                <a href="/dashboard"
+                <a href="{{route('admin.dashboard')}}"
                     class="block px-4 m-2 flex justify-end     hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                     <span>DashBoard</span>
                 </a>
             </li>
             <li class=" py-1">
-                <a href="/profile"
+                <a href="{{route('admin.profile')}}"
                     class="block px-4 flex m-2   hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-end   hover:text-yellow-500">
                     <span>Profile</span>
                 </a>
@@ -36,7 +36,7 @@
 
             @can('admin')
                 <li class=" py-1">
-                    <a href="/admin/users"
+                    <a href="{{route('admin.users.index')}}"
                         class="block  m-2 px-4 flex    hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-end   hover:text-yellow-500">
                         <span>Users</span>
 
@@ -44,26 +44,26 @@
                 </li> @endcan @can('create series')
 
                 <li class=" py-1">
-                    <a href="/createseries"
+                    <a href="{{route('admin.create.series')}}"
                         class="block  m-2 px-4 flex justify-end   hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
                         <span>Create Comics</span>
                     </a>
                 </li> @endcan @can('edit series')
                 <li class="py-1">
-                    <a href="/admin/comics"
+                    <a href="{{route('admin.comics.index')}}"
                         class="block  m-2 px-4    hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-end   hover:text-yellow-500">
                         <span>Comics</span>
                     </a>
             </li> @endcan
             @can('admin')
                 <li class="py-1">
-                    <a href="/admin/features"
+                    <a href="{{route('admin.features')}}"
                         class="block  m-2 px-4 flex justify-end     hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                         <span>Features</span>
                     </a>
                 </li>
                 <li class=" py-1">
-                    <a href="/settings"
+                    <a href="{{route('admin.settings')}}"
                         class="hidden px-4   m-2 flex justify-end    hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                         <span>Settings</span>
                     </a>
@@ -92,7 +92,7 @@
                 </a>
             </li>
             <li class=" py-1">
-                <a href="/dashboard"
+                <a href="{{route('admin.dashboard')}}"
                     class="block px-4 m-4  flex justify-start   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                     <span>DashBoard</span>
                     <svg class="w-5 ml-2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -104,7 +104,7 @@
                 </a>
             </li>
             <li class=" py-1">
-                <a href="/profile"
+                <a href="{{route('admin.profile')}}"
                     class="block px-4 flex m-4  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent justify-start   hover:text-yellow-500">
                     <span>Profile</span>
                     <svg class="w-5 ml-2" sxmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -116,7 +116,7 @@
             @can('admin')
 
                 <li class=" py-1">
-                    <a href="/admin/users"
+                    <a href="{{route('admin.users.index')}}"
                         class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent   hover:text-yellow-500">
                         <span>Users</span>
                         <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -128,7 +128,7 @@
             </li> @endcan
             @can('create series')
                 <li class=" py-1">
-                    <a href="/createseries"
+                    <a href="{{route('admin.create.series')}}"
                         class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent  hover:text-yellow-500">
                         <span>Create</span>
                         <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -139,7 +139,7 @@
             </li> @endcan
             @can('edit series')
                 <li class="py-1">
-                    <a href="/admin/comics"
+                    <a href="{{route('admin.comics.index')}}"
                         class="block  m-4 px-4   tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent flex justify-start hover:text-yellow-500">
                         <span>Comics</span>
                         <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -150,7 +150,7 @@
             </li> @endcan
             @can('admin')
                 <li class="py-1">
-                    <a href="/admin/features"
+                    <a href="{{route('admin.features')}}"
                         class="block  m-4 px-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                         <span>Features</span>
                         <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -160,7 +160,7 @@
                         </svg> </a>
                 </li>
                 <li class=" py-1">
-                    <a href="/settings"
+                    <a href="{{route('admin.settings')}}"
                         class="block px-4  m-4 flex justify-start  tracking-widest transform hover:scale-125 hover:bg-opacity-50 transition ease-out duration-300 border-transparent hover:text-yellow-500">
                         <span> Settings</span>
                         <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
