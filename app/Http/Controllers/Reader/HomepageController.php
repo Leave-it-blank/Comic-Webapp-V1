@@ -22,8 +22,8 @@ class HomepageController extends Controller
     {
      
    
-        $comics = Comic::orderBy('id', 'desc')->limit(6)->get();
-        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+        $comics = Comic::with('chapters')->orderBy('id', 'desc')->limit(6)->get();
+        $chapters = Chapter::with('comic')->orderBy('id', 'desc')->limit(18)->paginate(6);
 
 
        
@@ -122,10 +122,10 @@ class HomepageController extends Controller
 
     public function mostviewed(){
 
-        $comics = Comic::orderBy('view_count', 'desc')->limit(6)->get();
+        $comics = Comic::with('chapters')->orderBy('view_count', 'desc')->limit(6)->get();
 
 
-        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+        $chapters = Chapter::with('comic')->orderBy('id', 'desc')->limit(18)->paginate(6);
         return View::make('Home')
           ->with('comics', $comics)
           ->with( 'chapters', $chapters);
@@ -137,8 +137,8 @@ class HomepageController extends Controller
     public function mostpopular(){
 
 
-        $comics = Comic::orderBy('id', 'desc')->limit(6)->get();
-        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+        $comics = Comic::with('chapters')->orderBy('id', 'desc')->limit(6)->get();
+        $chapters = Chapter::with('comic')->orderBy('id', 'desc')->limit(18)->paginate(6);
 
 
        
@@ -152,15 +152,15 @@ class HomepageController extends Controller
     public function mostrandom(){
 
 
-        $noofch = Comic::all()->count();
-        $chapters = Chapter::orderBy('id', 'desc')->limit(18)->paginate(6);
+        $noofch = Comic::count();
+        $chapters = Chapter::with('comic')->orderBy('id', 'desc')->limit(18)->paginate(6);
        
      if($noofch >6){
-        $comics = Comic::all()->random(6);
+        $comics = Comic::awith('chapters')->inRandomOrder()->limit(6)->get();
      
      }
      else {
-        $comics = Comic::all()->random(1);
+        $comics = Comic::with('chapters')->inRandomOrder()->limit(1)->get();
        
      }
    

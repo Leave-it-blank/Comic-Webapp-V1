@@ -11,4 +11,13 @@ class settings extends Model
         'disq'	,'site_name',	'site_url',	'analytics'	,'adsense'	,'theme_name',	'discord_tag',	'patreon_tag',	'paypal_tag',	'meta'
 
     ];
+
+
+	public function comic()
+	{
+		return $this->hasMany( \App\comic::class);
+	}
+
+
+
 }

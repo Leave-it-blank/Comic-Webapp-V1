@@ -54,10 +54,17 @@ class comic extends Model
 		return $this->hasMany( \App\chapter::class, 'comic_id');
 	}
 
+
+	public function settings_site_url()
+	{
+
+		return implode(\App\settings::where('id', '1')->pluck('site_url')->toArray()); 
+		
+	}
+
 	public function chapter_number($comic)
 	{
 		return  implode(\App\chapter::where('comic_id', $comic->id)->latest()->limit(1)->pluck('number')->toArray());
-	
 
 	}
 
@@ -80,6 +87,21 @@ public function toSitemapTag(): Url
     }
 
 
+
+	public function chapter_previous($id, $number)
+	{
+
+
+		return Chapter::where('comic_id', $id)->where('number', '<', $number)->max('number');
+	}
+
+	public function chapter_next( $id , $number)
+	{
+
+		return Chapter::where('comic_id', $id)->where('number', '>', $number)->min('number');
+
+
+	}
 
 	/*
    

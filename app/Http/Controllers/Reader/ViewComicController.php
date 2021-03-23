@@ -20,11 +20,7 @@ class ViewComicController extends Controller
      */
     public function index()
     {
-        $comics = Comic::find($comics->id);
-
-
-
-        return view('series.comic_info_test')->with('comics ' ,$comics);
+        
     }
 
     /**
@@ -57,14 +53,15 @@ class ViewComicController extends Controller
     public function show(comic $comic, $id, $slug)
     {
 
-
+        $settings = DB::table('settings')->where('id', '1')->first();
+     
 
         if ($comics = Comic::find($id)) {
             $comics->increment('view_count');
             OpenGraph::setDescription($comics->desc);
             OpenGraph::setTitle($comics->title);
             OpenGraph::addProperty('determiner', 'Manga'); 
-            OpenGraph::addProperty('image' , $settings->site_url . $comics->cover);
+            OpenGraph::addProperty('image' , $comic->settings_site_url() . $comics->cover);
 
             $chapters = Chapter::where('comic_id', $id)->get();
 
@@ -78,7 +75,7 @@ class ViewComicController extends Controller
                 'chapters' => $chapters,
 
                 'comics' => $comics,
-              
+            
 
             ]);
 

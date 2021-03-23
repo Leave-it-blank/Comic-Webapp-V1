@@ -68,14 +68,14 @@ class ChapterController extends Controller
             OpenGraph::setDescription($comics->desc);
             OpenGraph::setTitle($comics->title);
             OpenGraph::addProperty('determiner', 'Manga'); 
-            OpenGraph::addProperty('image' , $settings->site_url . $comics->cover);
+            OpenGraph::addProperty('image' , $comics->settings_site_url(). $comics->cover);
             OpenGraph::addProperty('chapter_number' , $number);
             OpenGraph::addProperty('comic_id' , $id);
           // get previous user id
-             $previous = Chapter::where('comic_id', $id)->where('number', '<', $number)->max('number');
+             $previous = $comic->chapter_previous($id, $number);
 
           // get next user id
-           $next = Chapter::where('comic_id', $id)->where('number', '>', $number)->min('number');
+             $next = $comic->chapter_next($id, $number);
 
             $comics->increment('view_count');
 

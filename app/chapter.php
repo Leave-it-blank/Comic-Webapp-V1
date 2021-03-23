@@ -55,8 +55,6 @@ class chapter extends Model
 	}
 
 
-
-
 /*
 
 	public function comic()

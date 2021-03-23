@@ -1,12 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container m-24">
+<div class="container md:pl-24 mx-auto md:pr-3">
 <div class="row">
-  <div class="font-bold pb-2 mt-12 border-b border-gray-200">
-    Comics
-    
-    </div>
+  <div class="grid grid-cols-1 p-6 m-4  md:p-4 text-white hover:border-yellow-500 border-b-2 color-base-main">
+    {{ 'Comics' }}
+</div>
 
   
     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">

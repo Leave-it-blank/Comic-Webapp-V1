@@ -27,7 +27,7 @@ class LatestController extends Controller
 
 
       
-        $chapters = Chapter::orderBy('id', 'desc')->paginate(10);
+        $chapters = Chapter::with('comic')->orderBy('id', 'desc')->paginate(10);
 
 
        
